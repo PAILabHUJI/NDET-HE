@@ -1,0 +1,3037 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <title>הסברים להורים – N-DET</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    /* Touch-friendly tap highlight */
+    .domain-toggle, .scale-toggle, .subscale-toggle,
+    .nested-subscale-toggle, .example-toggle, .control-btn, .gender-btn {
+      -webkit-tap-highlight-color: rgba(44, 95, 138, 0.12);
+      touch-action: manipulation;
+    }
+
+    body {
+      font-family: 'Segoe UI', 'Arial Hebrew', Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.8;
+      color: #2c2c2c;
+      background: #f5f5f0;
+      direction: rtl;
+      text-align: right;
+    }
+
+    .page-wrapper {
+      max-width: 860px;
+      margin: 40px auto;
+      padding: 0 20px 60px;
+    }
+
+    .doc-header {
+      background: #2c5f8a;
+      color: #fff;
+      border-radius: 10px 10px 0 0;
+      padding: 36px 40px 28px;
+      margin-bottom: 0;
+    }
+
+    .doc-header h1 {
+      font-size: 1.9em;
+      font-weight: 700;
+      margin-bottom: 6px;
+      letter-spacing: 0.5px;
+    }
+
+    .doc-header .subtitle {
+      font-size: 1.05em;
+      opacity: 0.85;
+    }
+
+    /* Gender selector bar */
+    .gender-bar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 18px;
+      padding-top: 16px;
+      border-top: 1px solid rgba(255,255,255,0.25);
+      flex-wrap: wrap;
+    }
+
+    .gender-bar-label {
+      font-size: 0.95em;
+      opacity: 0.9;
+      white-space: nowrap;
+    }
+
+    .gender-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 18px;
+      border-radius: 30px;
+      border: 2px solid rgba(255,255,255,0.5);
+      background: transparent;
+      color: #fff;
+      font-size: 1em;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.18s;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+    }
+
+    .gender-btn:hover {
+      background: rgba(255,255,255,0.15);
+      border-color: rgba(255,255,255,0.8);
+    }
+
+    .gender-btn.active {
+      background: #fff;
+      color: #2c5f8a;
+      border-color: #fff;
+    }
+
+    .gender-btn .icon {
+      font-size: 1.1em;
+    }
+
+    .gender-note {
+      font-size: 0.82em;
+      opacity: 0.7;
+      margin-top: 6px;
+      width: 100%;
+    }
+
+    .doc-body {
+      background: #fff;
+      border-radius: 0 0 10px 10px;
+      padding: 40px 48px 48px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    }
+
+    p {
+      margin: 0.85em 0;
+    }
+
+    h2 {
+      font-size: 1.3em;
+      color: #2c5f8a;
+      margin: 2em 0 0.6em;
+      padding-bottom: 6px;
+      border-bottom: 2px solid #d0e4f4;
+    }
+
+    h3 {
+      font-size: 1.1em;
+      color: #1a4060;
+      margin: 1.5em 0 0.5em;
+    }
+
+    strong {
+      font-weight: 700;
+      color: #1a1a1a;
+    }
+
+    em {
+      font-style: italic;
+      color: #444;
+    }
+
+    mark {
+      background: #fff3cd;
+      padding: 1px 3px;
+      border-radius: 2px;
+    }
+
+    u {
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    /* Lists */
+    ol, ul {
+      padding-right: 1.6em;
+      padding-left: 0;
+      margin: 0.6em 0;
+    }
+
+    li {
+      margin: 0.45em 0;
+    }
+
+    li > p { margin: 0.3em 0; }
+
+    /* Blockquotes as indented explanatory sections */
+    blockquote {
+      margin: 0.5em 0 0.5em 0;
+      padding: 12px 20px 12px 12px;
+      border-right: 4px solid #b0ccdf;
+      border-left: none;
+      background: #f0f7ff;
+      border-radius: 0 6px 6px 0;
+      color: #333;
+    }
+
+    blockquote p { margin: 0.3em 0; }
+
+    /* Section dividers for domain sections */
+    .domain-section {
+      margin: 2em 0;
+      padding: 18px 22px;
+      background: #f8fbff;
+      border-radius: 8px;
+      border: 1px solid #d5e8f5;
+    }
+
+    .domain-title {
+      font-size: 1.05em;
+      font-weight: 700;
+      color: #2c5f8a;
+      margin-bottom: 1em;
+      padding-bottom: 6px;
+      border-bottom: 1px dashed #b8d4e8;
+    }
+
+    /* Scale item cards */
+    .scale-item {
+      margin: 0.8em 0;
+      padding: 10px 16px;
+      border-radius: 6px;
+      background: #fff;
+      border: 1px solid #e2e2e2;
+    }
+
+    .scale-item strong {
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    /* Intro greeting box */
+    .greeting-box {
+      background: linear-gradient(135deg, #e8f4ff 0%, #f0fbf0 100%);
+      border: 1px solid #c0ddf5;
+      border-radius: 8px;
+      padding: 22px 28px;
+      margin-bottom: 1.5em;
+    }
+
+    /* Footer */
+    .doc-footer {
+      margin-top: 3em;
+      padding-top: 1.5em;
+      border-top: 1px solid #e0e0e0;
+      color: #555;
+      font-size: 0.95em;
+    }
+
+    hr {
+      border: none;
+      border-top: 1px solid #e0e0e0;
+      margin: 2em 0;
+    }
+
+    @media (max-width: 600px) {
+      /* Base */
+      body { font-size: 15px; -webkit-text-size-adjust: 100%; }
+      
+      /* Layout */
+      .page-wrapper { margin: 0; padding: 0 0 40px; }
+      
+      /* Header */
+      .doc-header { padding: 20px 16px 18px; border-radius: 0; }
+      .doc-header h1 { font-size: 1.45em; }
+      .doc-header .subtitle { font-size: 0.95em; }
+      
+      /* Gender bar */
+      .gender-bar { gap: 8px; margin-top: 14px; padding-top: 14px; }
+      .gender-btn { padding: 8px 14px; font-size: 0.9em; }
+      .gender-note { font-size: 0.78em; }
+      
+      /* Body */
+      .doc-body { padding: 18px 14px 32px; border-radius: 0; box-shadow: none; }
+      
+      /* Headings */
+      h2 { font-size: 1.15em; }
+      h3 { font-size: 1em; }
+      
+      /* Global controls */
+      .global-controls { padding: 10px 12px; gap: 8px; }
+      .control-btn { font-size: 0.88em; padding: 8px 12px; }
+      
+      /* Domain / scale toggles — make them easier to tap */
+      .domain-toggle,
+      .scale-toggle,
+      .subscale-toggle,
+      .nested-subscale-toggle {
+        padding: 12px 40px 12px 14px;
+        min-height: 48px;
+        display: flex;
+        align-items: center;
+      }
+      .domain-toggle::after,
+      .scale-toggle::after,
+      .subscale-toggle::after,
+      .nested-subscale-toggle::after {
+        left: 12px;
+        font-size: 0.8em;
+      }
+      
+      /* Example toggles */
+      .example-label { padding: 7px 12px; font-size: 0.88em; min-height: 36px; display: inline-flex; align-items: center; }
+      
+      /* Blockquotes */
+      blockquote { padding: 10px 14px 10px 10px; }
+      
+      /* Domain / scale content */
+      .domain-section { padding: 14px 14px; }
+      .scale-content.expanded,
+      .subscale-content.scale-definition.expanded { padding: 12px 14px; }
+      
+      /* Nested */
+      .nested-subscale-toggle { margin: 0.8em 8px 0.4em; }
+      .nested-subscale-content { margin: 0 8px 0.8em; padding: 0 8px; }
+      
+      /* Sleep */
+      .sleep-question-group { padding: 12px 12px; }
+      .sleep-item { padding: 10px 10px; font-size: 0.95em; }
+      
+      /* Cards */
+      .greeting-box { padding: 16px 14px; }
+      .open-feedback-card { padding: 14px 14px; }
+      .open-feedback-context { padding: 10px 12px; }
+      .domain-intro-box,
+      .scale-guide-box { padding: 12px 14px; }
+      .communication-guided-group { padding: 12px 12px 14px; }
+      
+      /* Question stems */
+      .question-stem-heading { padding: 10px 14px; }
+      .subscale-question-prompt { padding: 8px 12px; }
+      .rating-scale-line { padding: 9px 10px; }
+      
+      /* Scale items */
+      .scale-item { padding: 8px 12px; }
+      
+      /* Attention notes */
+      .attention-note { padding: 10px 14px; }
+      
+      /* Print hide */
+      .gender-note { font-size: 0.76em; }
+    }
+
+    /* Very small screens */
+    @media (max-width: 360px) {
+      .doc-header h1 { font-size: 1.25em; }
+      body { font-size: 14px; }
+      .gender-btn { padding: 7px 10px; font-size: 0.85em; }
+      .doc-body { padding: 14px 12px 28px; }
+    }
+
+
+    /* Added in v12: clearer prompts inside scale sections */
+    .subscale-question-prompt {
+      margin: 0.4em 0 1em;
+      padding: 10px 14px;
+      background: #ffffff;
+      border: 1px solid #d5e8f5;
+      border-right: 5px solid #2c5f8a;
+      border-left: none;
+      border-radius: 7px;
+      box-shadow: 0 1px 3px rgba(44,95,138,0.05);
+    }
+
+    .subscale-question-prompt p {
+      margin: 0;
+      color: #1a4060;
+      font-weight: 700;
+    }
+
+    .rating-scale-line {
+      margin: 0.8em 0 1.1em;
+      padding: 10px 14px;
+      background: #ffffff;
+      border: 1px solid #ead7aa;
+      border-right: 5px solid #c9a34e;
+      border-left: none;
+      border-radius: 7px;
+      text-align: center;
+      box-shadow: 0 1px 3px rgba(201,163,78,0.07);
+    }
+
+    .rating-scale-line span {
+      color: #6d5523;
+      font-size: 1.02em;
+    }
+
+    @media print {
+      body { background: #fff; }
+      .page-wrapper { margin: 0; padding: 0; max-width: 100%; }
+      .doc-header { border-radius: 0; }
+      .doc-body { box-shadow: none; }
+      .gender-bar { display: none; }
+    }
+
+    /* Collapsible domain sections */
+    .domain-toggle {
+      cursor: pointer;
+      padding: 12px 18px;
+      margin: 1.5em 0 0.5em;
+      background: linear-gradient(135deg, #e8f4ff 0%, #f0f7ff 100%);
+      border: 1px solid #b8d4e8;
+      border-radius: 8px;
+      transition: all 0.2s;
+      user-select: none;
+      position: relative;
+    }
+
+    .domain-toggle:hover {
+      background: linear-gradient(135deg, #d5e8f8 0%, #e3f0ff 100%);
+      border-color: #9cc2dd;
+    }
+
+    .domain-toggle em,
+    .domain-toggle strong {
+      font-size: 1.1em;
+      font-weight: 600;
+      color: #2c5f8a;
+    }
+
+    .domain-toggle::after {
+      content: '◄';
+      position: absolute;
+      left: 18px;
+      top: 50%;
+      transform: translateY(-50%) rotate(0deg);
+      transition: transform 0.2s;
+      color: #2c5f8a;
+      font-size: 0.9em;
+    }
+
+    .domain-toggle.expanded::after {
+      transform: translateY(-50%) rotate(-90deg);
+    }
+
+    .domain-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease-out;
+    }
+
+    .domain-content.expanded {
+      max-height: 15000px;
+      transition: max-height 0.5s ease-in;
+    }
+
+    /* Scale toggles (תדירות, השפעה) */
+    .scale-toggle {
+      cursor: pointer;
+      padding: 10px 16px;
+      margin: 1.2em 0 0.4em;
+      background: linear-gradient(135deg, #fff3e6 0%, #fef8f0 100%);
+      border: 1px solid #e8d4b8;
+      border-radius: 6px;
+      transition: all 0.2s;
+      user-select: none;
+      position: relative;
+    }
+
+    .scale-toggle:hover {
+      background: linear-gradient(135deg, #ffe8cc 0%, #fef3e3 100%);
+      border-color: #d9c5a3;
+    }
+
+    .scale-toggle::after {
+      content: '▼';
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      transition: transform 0.2s;
+      color: #8b7355;
+      font-size: 0.75em;
+    }
+
+    .scale-toggle.expanded::after {
+      transform: translateY(-50%) rotate(-180deg);
+    }
+
+    .scale-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease-out;
+    }
+
+    .scale-content.expanded {
+      max-height: 5000px;
+      transition: max-height 0.5s ease-in;
+    }
+
+    /* Example toggles - INLINE DISPLAY */
+    .example-toggle {
+      cursor: pointer;
+      display: inline-block;
+      margin: 0.5em 0.5em 0.3em 0;
+      user-select: none;
+      vertical-align: top;
+    }
+
+    .example-label {
+      display: inline-block;
+      padding: 4px 10px;
+      background: #f0f7ff;
+      border: 1px solid #b8d4e8;
+      border-radius: 4px;
+      font-size: 0.9em;
+      color: #2c5f8a;
+      font-weight: 600;
+      transition: all 0.15s;
+    }
+
+    .example-toggle:hover .example-label {
+      background: #e3f0ff;
+      border-color: #9cc2dd;
+    }
+
+    .example-toggle.expanded .example-label {
+      background: #2c5f8a;
+      color: #fff;
+      border-color: #2c5f8a;
+    }
+
+    .example-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.25s ease-out;
+      clear: both;
+      display: block;
+    }
+
+    .example-content.expanded {
+      max-height: 3000px;
+      transition: max-height 0.4s ease-in;
+    }
+
+    .example-content p {
+      margin-top: 0.5em;
+    }
+
+    /* Subscale toggles (within social interaction domain) */
+    .subscale-toggle {
+      cursor: pointer;
+      padding: 10px 16px;
+      margin: 1.5em 0 0.5em;
+      background: linear-gradient(135deg, #e8f9f0 0%, #f0fff5 100%);
+      border: 2px solid #a8d5ba;
+      border-radius: 6px;
+      transition: all 0.2s;
+      user-select: none;
+      position: relative;
+    }
+
+    .subscale-toggle:hover {
+      background: linear-gradient(135deg, #d0f0dd 0%, #e5fff0 100%);
+      border-color: #88c5a0;
+    }
+
+    .subscale-toggle em {
+      font-size: 1.05em;
+      font-weight: 700;
+      color: #2d7a4f;
+    }
+
+    .subscale-toggle::after {
+      content: '▼';
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      transition: transform 0.2s;
+      color: #2d7a4f;
+      font-size: 0.75em;
+    }
+
+    .subscale-toggle.expanded::after {
+      transform: translateY(-50%) rotate(-180deg);
+    }
+
+    .subscale-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease-out;
+      padding: 0 8px;
+    }
+
+    .subscale-content.expanded {
+      max-height: 8000px;
+      transition: max-height 0.5s ease-in;
+    }
+
+
+    /* Nested subscale toggles (used inside an existing subscale) */
+    .nested-subscale-toggle {
+      margin: 1em 18px 0.4em;
+      padding: 8px 14px;
+      background: #fbfdff;
+      border: 1px dashed #9cc2dd;
+      border-right: 4px solid #7aa9c8;
+      border-radius: 6px;
+    }
+
+    .nested-subscale-toggle:hover {
+      background: #f2f8ff;
+      border-color: #7aa9c8;
+    }
+
+    .nested-subscale-toggle em {
+      font-size: 0.98em;
+      font-weight: 600;
+      color: #1a4060;
+    }
+
+    .nested-subscale-toggle::after {
+      color: #1a4060;
+      font-size: 0.7em;
+    }
+
+    .nested-subscale-content {
+      margin: 0 18px 0.9em;
+      padding: 0 12px;
+      border-right: 2px solid #d5e8f5;
+      background: #fcfeff;
+      border-radius: 0 0 6px 6px;
+    }
+
+
+    /* Question stem headings - used when several items complete the same opening sentence */
+    .question-stem-heading {
+      margin: 1.8em 0 0.8em;
+      padding: 12px 18px;
+      background: #f4f9fd;
+      border: 1px solid #c9deec;
+      border-right: 5px solid #2c5f8a;
+      border-radius: 7px;
+      color: #1a4060;
+    }
+
+    .question-stem-heading .stem-label {
+      display: block;
+      font-size: 0.82em;
+      font-weight: 700;
+      color: #2c5f8a;
+      margin-bottom: 4px;
+      letter-spacing: 0.2px;
+    }
+
+    .question-stem-heading p {
+      margin: 0;
+      font-size: 1.02em;
+      font-weight: 700;
+    }
+
+    /* Sleep section grouping */
+
+    .sleep-question-group {
+      margin: 1.2em 0 1.6em;
+      padding: 14px 18px;
+      background: #f8fbff;
+      border: 1px solid #d5e8f5;
+      border-radius: 8px;
+    }
+
+    .sleep-group-title {
+      font-weight: 700;
+      color: #2c5f8a;
+      margin-bottom: 0.8em;
+      padding-bottom: 5px;
+      border-bottom: 1px dashed #b8d4e8;
+    }
+
+    .sleep-item {
+      margin: 0.55em 0;
+      padding: 8px 12px;
+      background: #fff;
+      border: 1px solid #e2e2e2;
+      border-right: 4px solid #b8d4e8;
+      border-radius: 6px;
+      font-weight: 700;
+    }
+
+    .sleep-scale {
+      margin-top: 0.8em;
+      padding: 10px 14px;
+      background: #fff;
+      border: 1px solid #e2e2e2;
+      border-radius: 6px;
+    }
+
+    .sleep-scale-item {
+      margin: 0.55em 0;
+      padding-bottom: 0.45em;
+      border-bottom: 1px dotted #d8d8d8;
+    }
+
+    .sleep-scale-item:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+
+    /* Added in v11: clearer visual hierarchy without changing questionnaire text */
+    .global-controls {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+      margin: 1.2em 0 1.4em;
+      padding: 12px 14px;
+      background: #f7fafc;
+      border: 1px solid #d8e6ef;
+      border-radius: 8px;
+    }
+
+    .control-btn {
+      font-family: inherit;
+      font-size: 0.95em;
+      font-weight: 700;
+      cursor: pointer;
+      border: 1px solid #2c5f8a;
+      background: #2c5f8a;
+      color: #fff;
+      padding: 7px 14px;
+      border-radius: 999px;
+      transition: all 0.18s;
+    }
+
+    .control-btn:hover {
+      background: #1f4667;
+      border-color: #1f4667;
+    }
+
+    .control-btn.secondary {
+      background: #fff;
+      color: #2c5f8a;
+    }
+
+    .control-btn.secondary:hover {
+      background: #edf6fc;
+    }
+
+    /* General explanatory text remains plain; scales and questionnaire items get distinct visual treatment */
+    .scale-content.expanded,
+    .subscale-content.scale-definition.expanded {
+      margin: 0.2em 0 1.2em;
+      padding: 14px 18px;
+      background: #fffdf6;
+      border: 1px solid #ead7aa;
+      border-right: 5px solid #c9a34e;
+      border-radius: 0 0 8px 8px;
+    }
+
+    .subscale-content.scale-definition.expanded {
+      padding-right: 20px;
+      padding-left: 16px;
+    }
+
+    blockquote {
+      border: 1px solid #cfe4f4;
+      border-right: 5px solid #2c5f8a;
+      border-left: none;
+      background: #f0f7ff;
+      box-shadow: 0 1px 4px rgba(44,95,138,0.06);
+    }
+
+    .example-label {
+      padding: 5px 12px;
+      border-radius: 999px;
+      line-height: 1.35;
+    }
+
+    .example-toggle.expanded .example-label {
+      box-shadow: 0 1px 4px rgba(44,95,138,0.18);
+    }
+
+    .attention-note {
+      margin: 1em 0;
+      padding: 12px 18px;
+      background: #fff8dc;
+      border: 1px solid #e4c76b;
+      border-right: 5px solid #d19a00;
+      border-left: none;
+      border-radius: 7px;
+      color: #3f3518;
+    }
+
+    p.attention-note {
+      display: block;
+    }
+
+    blockquote.attention-note {
+      background: #fff8dc;
+      border-color: #e4c76b;
+      border-right-color: #d19a00;
+      box-shadow: 0 1px 4px rgba(209,154,0,0.08);
+    }
+
+    .attention-note strong,
+    .attention-note u {
+      color: #3f3518;
+    }
+
+
+    /* Added in v12: clearer prompts inside scale sections */
+    .subscale-question-prompt {
+      margin: 0.4em 0 1em;
+      padding: 10px 14px;
+      background: #ffffff;
+      border: 1px solid #d5e8f5;
+      border-right: 5px solid #2c5f8a;
+      border-left: none;
+      border-radius: 7px;
+      box-shadow: 0 1px 3px rgba(44,95,138,0.05);
+    }
+
+    .subscale-question-prompt p {
+      margin: 0;
+      color: #1a4060;
+      font-weight: 700;
+    }
+
+    .rating-scale-line {
+      margin: 0.8em 0 1.1em;
+      padding: 10px 14px;
+      background: #ffffff;
+      border: 1px solid #ead7aa;
+      border-right: 5px solid #c9a34e;
+      border-left: none;
+      border-radius: 7px;
+      text-align: center;
+      box-shadow: 0 1px 3px rgba(201,163,78,0.07);
+    }
+
+    .rating-scale-line span {
+      color: #6d5523;
+      font-size: 1.02em;
+    }
+
+    @media print {
+      .global-controls { display: none; }
+      blockquote, .scale-content.expanded, .subscale-content.scale-definition.expanded, .attention-note {
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+    }
+
+
+    /* Added in v13: clearer visual grouping for Communication, Play, and Open Feedback */
+    .enhanced-domain {
+      padding-top: 0.2em;
+    }
+
+    .domain-intro-box,
+    .scale-guide-box {
+      margin: 1em 0 1.25em;
+      padding: 14px 18px;
+      border-radius: 8px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.035);
+    }
+
+    .domain-intro-box {
+      background: #f6fbff;
+      border: 1px solid #d5e8f5;
+      border-right: 5px solid #2c5f8a;
+      border-left: none;
+    }
+
+    .domain-intro-box p,
+    .scale-guide-box p {
+      margin: 0.45em 0;
+    }
+
+    .scale-guide-box {
+      background: #fffdf6;
+      border: 1px solid #ead7aa;
+      border-right: 5px solid #c9a34e;
+      border-left: none;
+    }
+
+    .scale-guide-box ol,
+    .scale-guide-box ul {
+      margin-top: 0.55em;
+      margin-bottom: 0.55em;
+    }
+
+    .scale-guide-box .example-toggle {
+      margin-top: 0.25em;
+    }
+
+    .communication-scale-guide + blockquote,
+    .play-scale-guide + blockquote {
+      margin-top: 1.15em;
+    }
+
+    .question-stem-group {
+      margin: 1.4em 0 1.8em;
+      padding: 12px 14px 6px;
+      background: #fbfdff;
+      border: 1px solid #d8e8f3;
+      border-radius: 10px;
+    }
+
+    .question-stem-group .question-stem-heading {
+      margin-top: 0;
+      background: #eef7fc;
+      border-color: #b9d7e9;
+    }
+
+    .question-stem-group blockquote {
+      margin-right: 0.35em;
+      margin-left: 0;
+    }
+
+    .play-percent-guide p:nth-child(n+2):nth-child(-n+4) {
+      padding: 6px 10px;
+      background: #fff;
+      border: 1px solid #ead7aa;
+      border-radius: 6px;
+    }
+
+    .open-feedback-card {
+      margin: 1em 0 1.3em;
+      padding: 16px 20px;
+      background: #f6fbff;
+      border: 1px solid #d5e8f5;
+      border-right: 5px solid #2c5f8a;
+      border-left: none;
+      border-radius: 8px;
+      box-shadow: 0 1px 4px rgba(44,95,138,0.06);
+    }
+
+    .open-feedback-card p {
+      margin: 0.55em 0;
+    }
+
+    .open-feedback-card p:first-child {
+      color: #1a4060;
+      font-size: 1.02em;
+    }
+
+    .open-feedback-context {
+      margin: 1em 0 0.3em;
+      padding: 12px 16px;
+      background: #fffdf6;
+      border: 1px solid #ead7aa;
+      border-right: 5px solid #c9a34e;
+      border-left: none;
+      border-radius: 8px;
+    }
+
+    .open-feedback-context p {
+      margin: 0.55em 0;
+    }
+
+  
+
+    /* Added in v14: group Communication instructions with the items they explain */
+    .communication-guided-group {
+      margin: 1.15em 0 1.65em;
+      padding: 14px 16px 16px;
+      background: #fffdf6;
+      border: 1px solid #ead7aa;
+      border-right: 5px solid #c9a34e;
+      border-left: none;
+      border-radius: 10px;
+      box-shadow: 0 1px 5px rgba(201,163,78,0.08);
+    }
+
+    .communication-guided-group > .domain-intro-box,
+    .communication-guided-group > .scale-guide-box {
+      margin: 0 0 1em;
+      padding: 0 0 0.75em;
+      background: transparent;
+      border: none;
+      border-bottom: 1px dashed #e4c989;
+      border-radius: 0;
+      box-shadow: none;
+    }
+
+    .communication-guided-group > .domain-intro-box p,
+    .communication-guided-group > .scale-guide-box p {
+      margin: 0.45em 0;
+    }
+
+    .communication-guided-group > blockquote {
+      margin: 0.85em 0 0.75em;
+      box-shadow: 0 1px 3px rgba(44,95,138,0.04);
+    }
+
+    .communication-guided-group > blockquote:last-child {
+      margin-bottom: 0;
+    }
+
+    .communication-guided-group .rating-scale-line {
+      margin-right: 0;
+    }
+
+
+
+    /* Added in v16: short labels for communication groups */
+    .communication-group-title {
+      display: inline-block;
+      margin: 0 0 0.85em;
+      padding: 5px 12px;
+      background: #fff;
+      border: 1px solid #e4c989;
+      border-right: 4px solid #c9a34e;
+      border-left: none;
+      border-radius: 999px;
+      color: #7a5b13;
+      font-size: 0.9em;
+      font-weight: 700;
+      letter-spacing: 0.1px;
+    }
+
+
+  </style>
+</head>
+<body>
+<div class="page-wrapper">
+
+  <div class="doc-header">
+    <div class="subtitle">מסמך הכנה למחקר</div>
+    <h1>ברוכים הבאים למחקר! — הסברים להורים</h1>
+    <div class="subtitle">שאלון N-DET · כלי מעקב אקולוגי להפרעות נוירו-התפתחותיות</div>
+    
+    <div class="gender-bar">
+      <span class="gender-bar-label">הצג נוסח עבור:</span>
+      <button class="gender-btn active" id="btn-neutral" onclick="setGender('neutral')">
+        <span class="icon">👦👧</span> כפי שנכתב
+      </button>
+      <button class="gender-btn" id="btn-male" onclick="setGender('male')">
+        <span class="icon">👦</span> בן (זכר)
+      </button>
+      <button class="gender-btn" id="btn-female" onclick="setGender('female')">
+        <span class="icon">👧</span> בת (נקבה)
+      </button>
+      <div class="gender-note">בחירת מגדר תתאים את הנוסח בכל המסמך לצורה הדקדוקית המתאימה</div>
+    </div>
+  </div>
+
+  <div class="doc-body">
+  <div id="genderable-content">
+<p><strong><span dir="rtl"><u>ברוכים הבאים
+למחקר!</u></span></strong></p>
+<p><span dir="rtl">שלום</span>,</p>
+<p><span dir="rtl">תודה על ההשתתפות במחקר ועל הקדשת הזמן לקריאת הקדמה
+זו. בהמשך נסביר בקצרה את מטרת המחקר וניתן כמה הנחיות חשובות לפני שתתחילו
+במילוי השאלונים היומיים.</span></p>
+<p><span dir="rtl">מחקר זה הוא חלק מתהליך התיקוף של שאלון</span>
+N-DET<span dir="rtl">: כלי מעקב אקולוגי להפרעות נוירו-התפתחותיות. זהו
+שאלון חדש שנועד להעריך התנהגויות ותסמינים יומיומיים המאפיינים לעיתים
+קרובות מצבים נוירו-התפתחותיים. ישנו צורך משמעותי בכלים המאפשרים לזהות את
+ההתנהגויות האלו בחיי היום-יום, במיוחד לצורך מעקב אחר שינויים לאורך זמן
+או בתגובה להתערבויות שונות. אנו מקווים שה־N-DET יסייע לענות על צורך זה.</span></p>
+<p><span dir="rtl">במסגרת החלק העיקרי במחקר, אחת לשישה שבועות תתבקשו למלא שאלון קצר מדי ערב במשך שבוע אחד. בשעה 20:30 תישלח
+אליכם נוטיפיקציה דרך אפליקציית</span> <strong>m-Path</strong> <span
+dir="rtl">למילוי השאלון, המתייחס להתנהגות ילדכם במהלך אותו היום</span>.
+<span dir="rtl">ניתן למלא את השאלון עד השעה 10:30 בבוקר שלמחרת. אם
+השאלון טרם הושלם, תישלח תזכורת בשעה 8:30 בבוקר. אותן השאלות חוזרות על
+עצמן מדי יום. חזרה זו חשובה לנו, משום שהיא מאפשרת להבין טוב יותר דפוסים
+יומיומיים ושינויים בהתנהגות לאורך זמן</span>.</p>
+<p class="attention-note"><span dir="rtl">שימו לב, עבור כל שאלה תוכלו לציין אם היא אינה
+רלוונטית עבור ילדכם או אם לא הייתה לכם הזדמנות לצפות במצב או בהתנהגות
+המתוארים בשאלה באותו היום</span>. <span dir="rtl">תוכלו גם להוסיף הערות
+חופשיות, ונשמח מאוד לקבל את המשוב שלכם.</span></p>
+<p><strong><span dir="rtl">שלוש נקודות כלליות שחשוב
+לזכור</span></strong></p>
+<ol type="1">
+<li><p><span dir="rtl"><u>נסו לענות בדיוק אבל גם בספונטניות:</u> יש
+לענות על כל פריט על בסיס התנהגות הילד באותו יום ספציפי. נסו להיות
+מדויקים ככל האפשר, אך בלי לחשוב יותר מדי. זה יעזור לשמור על תהליך חלק
+ועקבי.</span></p></li>
+<li><p><span dir="rtl"><u>השתדלו להתייחס לשאלות בהתאם להסברים שלמטה:</u>
+אנו יודעים שאנשים שונים עשויים להבין חלק מהשאלות באופן שונה. לכן, לכל
+שאלה צירפנו הסבר קצר ודוגמאות כדי להבהיר את כוונתנו. באפליקציה, ניתן
+ללחוץ על הקישור "הסבר" ליד כל פריט כדי לראות הבהרות אלו (שימו לב: במסמך
+זה, ההבהרות מצורפות ישירות מתחת לכל פריט).</span></p></li>
+<li><p><span dir="rtl"><u>שמרו על עקביות לאורך הזמן:</u> חשוב להתייחס
+לשאלות באופן עקבי לאורך כל המחקר. ניתן לחזור למדריך זה בכל עת, כאן או
+דרך אפליקציית</span> m-Path<span dir="rtl">.</span></p></li>
+</ol>
+<p><em><span dir="rtl">השאלות והפורמטים השונים של התשובות שלהן, יחד עם
+הסברים ודוגמאות, מופיעים למטה. אנא קראו אותם בעיון לפני שתתחילו במילוי
+השאלונים היומיים. תוכלו גם לחזור אליהם בכל עת במהלך
+המחקר.</span></em></p>
+<p><span dir="rtl"></span></p>
+<p><strong><span dir="rtl">הבנת השאלות וסוגי התשובות בשאלון</span></strong></p>
+<p><span dir="rtl">לשאלות בסקר יש פורמטים שונים של מענה, כך שלכל קבוצה
+של שאלות יש פורמט וסקאלות מתאימות.</span></p>
+<p><span dir="rtl">פורמט התשובות הנפוץ כולל התייחסות לתדירות והשפעה של ההתנהגות</span></p>
+<div class="global-controls" role="toolbar" aria-label="פתיחה וסגירה של סקשנים">
+  <button type="button" class="control-btn" onclick="expandAllSections()">פתח את כל הסקשנים</button>
+  <button type="button" class="control-btn secondary" onclick="collapseAllSections()">סגור את כל הסקשנים</button>
+</div>
+<div class="scale-toggle" onclick="toggleScale('freq')">
+<p><strong><span dir="rtl">תדירות:</span></strong></p>
+</div>
+<div class="scale-content" id="scale-freq">
+
+<p><span dir="rtl">שאלות רבות בשאלון היומי נפתחות בשאלה אודות התדירות
+שבה התרחשה התנהגות מסוימת במהלך היום</span>. <span dir="rtl">עבור חלק
+מהשאלות – במיוחד אלה הקשורות לתסמינים התנהגותיים – אנו משתמשים בסקאלה
+הבאה:</span></p>
+<ul>
+<li><p><strong><span dir="rtl">באיזו תדירות הופיעה התנהגות זו במהלך
+היום?</span></strong></p></li>
+</ul>
+<p><span dir="rtl">במילה "היום" הכוונה היא במהלך הזמן שבו בילית היום עם
+הילד/ה שלך.</span></p>
+<p><strong><span dir="rtl">1</span>- <span dir="rtl">כלל
+לא</span></strong></p>
+<blockquote>
+<p><span dir="rtl">ההתנהגות לא הופיעה בשום שלב במהלך היום</span>.</p>
+</blockquote>
+<p><strong><span dir="rtl">2</span>- <span dir="rtl">לעיתים
+רחוקות</span></strong></p>
+<blockquote>
+<p><span dir="rtl">מקרים קצרים או בודדים שלא היוו חלק משמעותי מפעילויות
+היום והתרחשו לעיתים רחוקות בלבד</span>.</p>
+</blockquote>
+<p><strong><span dir="rtl">3</span>- <span
+dir="rtl">לפעמים</span></strong></p>
+<blockquote>
+<p><span dir="rtl">ההתנהגות התרחשה מדי פעם לאורך היום</span>. <span
+dir="rtl">ההתנהגות נוכחת, אך לא מהווה דפוס התנהגות דומיננטי</span>.</p>
+</blockquote>
+<p><strong><span dir="rtl">4</span>- <span dir="rtl">לעיתים
+קרובות</span></strong></p>
+<blockquote>
+<p><span dir="rtl">ההתנהגות הופיעה באופן חוזר לאורך היום</span>. <span
+dir="rtl">מקרים מרובים (6+ פעמים) שיצרו דפוס התנהגות ברור</span>. <span
+dir="rtl">מדובר היה במרכיב משמעותי בהתנהגות הילד באותו יום, אך עם
+מרווחים ברורים בין ההתרחשויות</span>.</p>
+</blockquote>
+<p><strong><span dir="rtl">5</span>- <span dir="rtl">רוב שעות
+היום</span></strong></p>
+<blockquote>
+<p><span dir="rtl">ההתנהגות הופיעה שוב ושוב בעקביות לאורך רוב שעות
+היום</span>. <span dir="rtl">ההתנהגות היוותה מאפיין עקבי ומתמשך בהתנהגות
+הילד</span>. <span dir="rtl">מעט מאוד פרקי זמן ממושכים, אם בכלל, שבהם
+ההתנהגות לא הופיעה</span>.</p>
+</blockquote>
+<p><span dir="rtl">אנו מודעים לכך שתדירות בלבד אינה משקפת את כל הסיפור
+או את משמעותה הכוללת של התנהגות. לפעמים התנהגות שמתרחשת רק פעם אחת יכולה
+להיות בעלת השפעה גדולה, בעוד שהתנהגויות שחוזרות לעיתים קרובות עשויות
+להשפיע מעט.</span></p>
+<p><span dir="rtl">לכן, הוספנו מדד נוסף שיעזור לנו להבין טוב יותר את
+השפעת ההתנהגות מעבר לתדירות שלה</span>.</p>
+<p><span dir="rtl">בכל מקרה שבו תסמנו שהתנהגות מסוימת התרחשה לפחות פעם
+אחת במהלך יום נתון (כלומר, יותר מאשר "כלל לא"), תופיע שאלת המשך בנוגע
+להשפעה שהייתה להתנהגות זו על תפקוד הילד.</span></p>
+
+</div>
+<div class="scale-toggle" onclick="toggleScale('impact')">
+<p><strong><span dir="rtl">השפעה:</span></strong></p>
+</div>
+<div class="scale-content" id="scale-impact">
+
+<ul>
+<li><p><strong><span dir="rtl">עד כמה התנהגות זו הפריעה לתפקוד של ילדך
+היום?</span></strong></p></li>
+</ul>
+<p><span dir="rtl">עד כמה ההתנהגות הפריעה/פגעה ביכולת של הילד/ה: לבצע
+פעילויות שגרתיות ויומיומיות, לקיים אינטראקציות עם בני משפחה וחברים,
+להשתתף בפעילויות למידה או משחק, להתמודד עם דרישות יומיומיות טיפוסיות,
+להתנהל במסגרת סדר היום הרגיל שלהם, וכו'.</span></p>
+<p class="attention-note"><span dir="rtl">שימו לב: פריט זה מודד את עוצמת ההפרעה/השיבוש שהיו בכל
+פעם שההתנהגות הופיעה, ללא תלות בתדירות שלה. התנהגות נדירה יכולה להיות
+בעלת השפעה משמעותית, בעוד שהתנהגות שכיחה עשויה להיות בעלת השפעה
+מינימלית</span>.</p>
+<ol type="1">
+<li><p><strong><span dir="rtl">בכלל לא</span></strong></p></li>
+</ol>
+<blockquote>
+<p><span dir="rtl">כשההתנהגות הופיעה, היא לא הפריעה לפעילויות או לתפקוד.
+ההתנהגות הייתה ניכרת אך לא דרשה שינויים או התאמות כלשהן. הילד/ה היו
+יכולים להמשיך בפעילויות הרגילות שלהם ללא הפרעה</span>.</p>
+</blockquote>
+<ol start="2" type="1">
+<li><p><strong><span dir="rtl">במידה קלה</span></strong></p></li>
+</ol>
+<blockquote>
+<p><span dir="rtl">ההתנהגות גרמה להפרעה מזערית כאשר התרחשה. היה צורך
+בהתאמות קלות וקצרות-טווח, אך פעילויות יכלו להמשיך. הילד/ה חזר/ה לתפקוד
+הרגיל שלו/ה במהירות ועם תמיכה מינימלית בלבד</span>.</p>
+</blockquote>
+<ol start="3" type="1">
+<li><p><strong><span dir="rtl">במידה בינונית</span></strong></p></li>
+</ol>
+<blockquote>
+<p><span dir="rtl">כשההתנהגות הופיעה, היא הפריעה באופן ניכר לפעילויות
+שהתרחשו באותו הזמן. נדרשו התערבות, שינוי או התאמה כלשהי על מנת להמשיך
+בפעילות. הילד/ה נזקק/ה לתמיכה פעילה כדי לשמור על רמת תפקוד</span>.</p>
+</blockquote>
+<ol start="4" type="1">
+<li><p><strong><span dir="rtl">במידה ניכרת / במידה
+רבה</span></strong></p></li>
+</ol>
+<blockquote>
+<p><span dir="rtl">בכל פעם שההתנהגות הופיעה, היא שיבשה באופן משמעותי את
+מה שהתרחש באותו הזמן. נדרשה התערבות משמעותית כדי לחדש ולהמשיך בפעילות.
+הילד/ה התקשה/תה לחזור לתפקוד רגיל. לעיתים קרובות היה צורך לשנות או
+להשהות את הפעילות</span>.</p>
+</blockquote>
+<ol start="5" type="1">
+<li><p><strong><span dir="rtl">במידה חמורה</span></strong></p></li>
+</ol>
+<blockquote>
+<p><span dir="rtl">כשההתנהגות הופיעה, היא שיבשה לחלוטין את הפעילויות
+המתרחשות באותו רגע. נדרשה התערבות מיידית ואינטנסיבית. הילד/ה לא יכל/ה
+להמשיך בתפקוד רגיל עד שהמצב נפתר. היה צורך להפסיק או לשנות לחלוטין את
+הפעילויות.</span></p>
+</blockquote>
+<p><span dir="rtl"></span></p>
+<blockquote class="attention-note">
+<p><span dir="rtl"><strong>שימו לב:</strong> כאשר ההתנהגות מופיעה מספר
+פעמים ובכל פעם היא משפיעה באופן שונה, נסו להעריך את ההשפעה
+הממוצעת.</span></p>
+</blockquote>
+<p><span dir="rtl"></span></p>
+<div class="example-toggle" onclick="toggleExample('scale_examples')">
+  <span class="example-label">דוגמאות ▼</span>
+</div>
+<div class="example-content" id="example-scale_examples">
+<blockquote>
+<p><span dir="rtl"><em>דוגמאות</em>:</span></p>
+</blockquote>
+<ul>
+<li><p><span dir="rtl">התקף זעם שמתרחש פעם יחידה, אך מחייב סיום מפגש
+חברתי ייחשב בעל תדירות נמוכה והשפעה רבה.</span></p></li>
+<li><p><span dir="rtl">זמזום תדיר שאינו פוגע ביכולת של הילד/ה להתרכז,
+לשחק, או להמשיך בשגרה שלו, ייחשב כבעל השפעה נמוכה, למרות התדירות
+הגבוה.</span></p></li>
+<li><p><span dir="rtl">מקרה בודד של תוקפנות שאחריו הילד/ה יוצא/ת מוויסות
+ולא מצליח/ה להשתתף בפעילויות הרגילות שלו/ה, ייחשב כבעל השפעה חמורה,
+למרות התדירות הנמוכה.</span></p></li>
+<li><p><span dir="rtl">תזוזתיות מתמדת (</span>fidgeting<span dir="rtl">)
+שלא מפריעה לילד/ה להשלים משימות או להיות מעורב/ת בפעילויות, תחשב בעלת
+השפעה מזערית ותדירות גבוהה.</span></p></li>
+<li><p><span dir="rtl">הילד/ה דוחף/ת אחרים שוב ושוב במשחק ומקשה על
+הפעילות – זו התנהגות עם תדירות גבוהה והשפעה רבה.</span></p></li>
+<li><p><span dir="rtl">הילד/ה שר/ה לעצמו בשקט מדי פעם בתור, באופן שלא
+פוגע ביכולת של הילד/ה לחכות, למלא הוראות, או להישאר מווסת/ת – זו התנהגות
+עם תדירות והשפעה נמוכות.</span></p></li>
+</ul>
+</div>
+
+</div>
+<p><strong><span dir="rtl">השאלות המתאימות לפורמט תשובות זה, מלווות
+בהסברים ודוגמאות:</span></strong></p>
+<div class="domain-toggle" onclick="toggleDomain('dom0')">
+<p><em><span dir="rtl">תחום תוקפנות ועצבנות</span></em></p>
+</div>
+<div class="domain-content" id="domain-dom0">
+
+<blockquote>
+<p><strong><span dir="rtl">[שם] היה/הייתה במצב רוח שלילי או
+עצבני.</span></strong></p>
+<p><span dir="rtl"><strong>הסבר:</strong> מציג/ה סימנים של חוסר שביעות
+רצון, עצבנות, נטייה לתסכול, או להתעצבן
+בקלות<strong>.</strong></span></p>
+<div class="example-toggle" onclick="toggleExample('agg_ex1')">
+  <span class="example-label">דוגמאות ▼</span>
+</div>
+<div class="example-content" id="example-agg_ex1">
+<p><span dir="rtl"><strong>דוגמאות:</strong> להתבכיין, להתלונן, רגישות
+לדברים קטנים, קושי להתעודד<strong>.</strong></span></p>
+</div>
+<p><strong><span dir="rtl">[שם] לא שיתף/ה פעולה או גילה/תה
+התנגדות</span></strong></p>
+<p><span dir="rtl"><strong>הסבר</strong>: מסרב/ת באופן אקטיבי לביצוע
+הוראות, עושה בכוונה ההפך ממה שהתבקש, או מראה התנגדות לבקשות.</span></p>
+<div class="example-toggle" onclick="toggleExample('agg_ex2')">
+  <span class="example-label">דוגמאות ▼</span>
+</div>
+<div class="example-content" id="example-agg_ex2">
+<p><span dir="rtl"><strong>דוגמאות</strong>: לא עומד/ת במילוי הוראות
+בסיסיות בשגרה יומיומית, מסרב/ת להשתתף בפעילויות חובה בבית או בבית הספר,
+עונה "לא" לרוב הבקשות.</span></p>
+</div>
+<p><strong><span dir="rtl">[שם] הפגין/ה התנהגויות
+מאתגרות/מפריעות</span></strong></p>
+<p><span dir="rtl"><strong>הסבר:</strong> מפגין/ה התנהגויות קשות לניהול,
+מפריעות, או מדאיגות מעבר להתנהגויות הטיפוסיות לגילו/ה.</span></p>
+<div class="example-toggle" onclick="toggleExample('ex1')">
+  <span class="example-label">דוגמאות ▼</span>
+</div>
+<div class="example-content" id="example-ex1">
+<p><span dir="rtl"><strong>דוגמאות:</strong> תוקפנות פיזית (הרבצות,
+בעיטות, נשיכות), זריקת חפצים מתוך כעס, התקפי זעם משמעותיים, התנהגות
+הרסנית כלפי חפצים, בריחה פתאומית.</span></p>
+</div>
+</blockquote>
+
+</div><div class="domain-toggle" onclick="toggleDomain('dom1')">
+<p><em><span dir="rtl">תחום קשב</span></em></p>
+</div>
+<div class="domain-content" id="domain-dom1">
+
+<blockquote>
+<p><strong><span dir="rtl">[שם] התקשה/תה לשמור על ריכוז במשימה או במשחק
+למשך 3-4 דקות</span></strong></p>
+<p><span dir="rtl"><strong>הסבר:</strong> קושי בשמירה על קשב, תשומת לב
+ומעורבות בפעילות אחת מבלי להחליף לפעילות אחרת.</span></p>
+<div class="example-toggle" onclick="toggleExample('ex2')">
+  <span class="example-label">דוגמאות ▼</span>
+</div>
+<div class="example-content" id="example-ex2">
+<p><span dir="rtl"><strong>דוגמאות:</strong> מתקשה לסיים פאזל, להישאר עם
+צעצוע/משחק אחד, לשבת במהלך ארוחה בלי לקום לעיתים תכופות.</span></p>
+</div>
+<p><strong><span dir="rtl">[שם] התקשה/תה לשמור על ריכוז בנוכחות הסחות
+דעת למשך 3-4 דקות</span></strong></p>
+<p><span dir="rtl"><strong>הסבר:</strong> מתקשה להתרכז ולשמור על ריכוז
+בפעילות בנוכחות הסחות דעת בסביבה או גירויים מתחרים.</span></p>
+<div class="example-toggle" onclick="toggleExample('ex3')">
+  <span class="example-label">דוגמאות ▼</span>
+</div>
+<div class="example-content" id="example-ex3">
+<p><span dir="rtl"><strong>דוגמאות:</strong> להפסיק משחק עם צעצוע אהוב
+בעוד שאחרים נעים בסביבה, להפסיק פעילות בזמנים רועשים.</span></p>
+</div>
+<p><strong><span dir="rtl">[שם] התקשה/תה להפנות תשומת לב למידע מילולי,
+חזותי או כתוב</span></strong></p>
+<p><span dir="rtl"><strong>הסבר:</strong> מציג/ה יכולת מופחתת לעבד
+ולעקוב אחר מידע המוצג בצורות שונות.</span></p>
+<div class="example-toggle" onclick="toggleExample('ex4')">
+  <span class="example-label">דוגמאות ▼</span>
+</div>
+<div class="example-content" id="example-ex4">
+<p><span dir="rtl"><strong>דוגמאות:</strong> לא לשים לב למכשולים בזמן
+הליכה/ריצה, התעלמות מאנשים/חפצים מוכרים בסביבה, לפספס שמישהו מראה להם
+צעצוע.</span></p>
+</div>
+</blockquote>
+
+</div><div class="domain-toggle" onclick="toggleDomain('dom2')">
+<p><em><span dir="rtl">תחום היפראקטיביות</span></em></p>
+</div>
+<div class="domain-content" id="domain-dom2">
+
+<blockquote>
+<p><strong><span dir="rtl">[שם] היה/הייתה אימפולסיבי/ת ו/או פעל/ה בלי
+לחשוב</span></strong></p>
+<p><span dir="rtl"><strong>הסבר:</strong> להגיב או לפעול מהר בלי להתחשב
+בהשלכות או בבטיחות</span><strong>.</strong></p>
+<div class="example-toggle" onclick="toggleExample('hyper_ex1')">
+  <span class="example-label">דוגמאות ▼</span>
+</div>
+<div class="example-content" id="example-hyper_ex1">
+<p><strong><span dir="rtl">דוגמאות</span>: <span
+dir="rtl"></span></strong><span dir="rtl">לחטוף חפצים מאחרים, למהר
+להתחיל פעילויות בלי להמתין להוראות, לגעת בחפצים מיד למרות מתן אזהרות,
+לרוץ למקומות בלי לבדוק קודם</span>.</p>
+</div>
+<p><strong><span dir="rtl">[שם] התקשה/תה להמתין</span></strong></p>
+<p><strong><span dir="rtl">הסבר</span>: <span
+dir="rtl"></span></strong><span dir="rtl">מציג/ה סימנים של מצוקה או חוסר
+יכולת לדחות רצונות או צרכים מיידיים</span>.</p>
+<div class="example-toggle" onclick="toggleExample('hyper_ex2')">
+  <span class="example-label">דוגמאות ▼</span>
+</div>
+<div class="example-content" id="example-hyper_ex2">
+<p><strong><span dir="rtl">דוגמאות</span>: <span
+dir="rtl"></span></strong><span dir="rtl">חוסר יכולת לחכות לתור שלהם עם
+צעצוע, להתרגז כשאוכל לא מגיע מיד, קושי להמתין בתור, קושי להמתין
+לפעילויות רצויות, קטיעה של אחרים בדיבור או קושי לחכות לתורם
+בשיחה</span>.</p>
+</div>
+<p><strong><span dir="rtl">[שם] היה/הייתה פעיל/ה מאוד וחסר/ת
+מנוחה</span></strong></p>
+<p><strong><span dir="rtl">הסבר</span>: <span
+dir="rtl"></span></strong><span dir="rtl">הפגין/ה תנועתיות או פעילות
+מופרזת, מעבר למה שמתאים בסיטואציה</span>.</p>
+<div class="example-toggle" onclick="toggleExample('hyper_ex3')">
+  <span class="example-label">דוגמאות ▼</span>
+</div>
+<div class="example-content" id="example-hyper_ex3">
+<p><strong><span dir="rtl">דוגמאות</span>: <span
+dir="rtl"></span></strong><span dir="rtl">תנועתיות או התעסקות מתמדת בזמן
+פעילויות בישיבה, קושי להישאר במקום אחד, טיפוס על רהיטים כשצריך לשבת,
+ריצה במקום הליכה בתוך הבית</span>.</p>
+</div>
+</blockquote>
+
+</div><div class="domain-toggle" onclick="toggleDomain('dom3')">
+<p><em><span dir="rtl">תחום הימנעות, פחד וחרדה</span></em></p>
+</div>
+<div class="domain-content" id="domain-dom3">
+
+<p><em><span dir="rtl">בפריטים הבאים, ביטויי פחד, חרדה, מצוקה,
+דאגה או חשש עשויים לבוא לידי ביטוי בדיבור, בהבעה קולית, או בסימנים
+פיזיים כגון רעד, הזעה, קושי בנשימה, מתח גופני, חוסר מנוחה, הליכה הלוך
+ושוב, או בהלה בקלות.</span></em></p>
+
+<blockquote>
+<p><strong><span dir="rtl">[שם] הפגין/ה פחד, חרדה, מצוקה, הימנעות או
+נסיגה מאובייקטים או מצבים ספציפיים (כגון: עכבישים, מחטים,
+וכו')</span></strong></p>
+<p><span dir="rtl"><strong>הסבר:</strong> מציג/ה פחד, מצוקה, או
+התנהגויות הימנעות ניכרים כאשר נפגש עם חפצים, קולות, תחושות, מצבים
+ספציפיים שבדרך כלל אינם מפחידים עבור אחרים.</span></p>
+<div class="example-toggle" onclick="toggleExample('fear_ex1')">
+  <span class="example-label">דוגמאות ▼</span>
+</div>
+<div class="example-content" id="example-fear_ex1">
+<p><span dir="rtl"><strong>דוגמאות</strong>: לברוח או לסרב להתקרב לחפצים
+מסוימים (לדוג' שואב אבק, בלונים, כלבים), סירוב להיכנס לחדרים שבהם נמצאים
+חפצים ספציפיים.</span></p>
+</div>
+<p><strong><span dir="rtl">[שם] הפגין/ה פחד, חרדה או מצוקה במצבים
+חברתיים</span>.</strong></p>
+<p><span dir="rtl"><strong>הסבר:</strong> הפגנת חוסר נוחות או מצוקה
+משמעותית, בהתמודדות עם אינטראקציות חברתיות או סיטואציות הכוללות אנשים
+אחרים.</span></p>
+<div class="example-toggle" onclick="toggleExample('fear_ex2')">
+  <span class="example-label">דוגמאות ▼</span>
+</div>
+<div class="example-content" id="example-fear_ex2">
+<p><span dir="rtl"><strong>דוגמאות</strong>: להחזיק, להיצמד או להישאר
+קרוב מאוד לדמות מטפלת במצבים חברתיים, להתרחק כשאחרים מתקרבים, לכסות את
+הפנים עם הידיים או עם חפצים.</span></p>
+</div>
+<p><strong><span dir="rtl">[שם] הפגין/ה פחד, חרדה או מצוקה בנוגע
+לשינויים, חוסר שגרה, או הפרעה בפעילות רצויה</span>.</strong></p>
+<p><span dir="rtl"><strong>הסבר:</strong> מפגין/ה מצוקה משמעותית או
+תגובות שליליות בעת התמודדות עם שינויים בשגרה רגילה, מעברים, או הפרעות
+לפעילויות אהובות.</span></p>
+<div class="example-toggle" onclick="toggleExample('fear_ex3')">
+  <span class="example-label">דוגמאות ▼</span>
+</div>
+<div class="example-content" id="example-fear_ex3">
+<p><span dir="rtl"><strong>דוגמאות</strong>: להתרגז כשמסלול מוכר משתנה
+או כשצריך ללבוש בגדים שונים מהרגיל (לדוג' כשבגד אהוב נמצא בכביסה), להיות
+מעוצבן כשיושב/ת במקום אחר בשולחן אוכל או בכיתה.</span></p>
+</div>
+<p><strong><span dir="rtl">[שם] הפגין/ה פחד, חרדה או מצוקה מפרידה מדמות
+מטפלת, או חוסר רצון להישאר לבד</span>.</strong></p>
+<p><span dir="rtl"><strong>הסבר:</strong> מפגין/ה מצוקה משמעותית בעת
+היפרדות או פוטנציאל להיפרדות ממטפלים עיקריים, או הצגת צורך מופרז בנוכחות
+הדמות המטפלת.</span></p>
+<div class="example-toggle" onclick="toggleExample('fear_ex4')">
+  <span class="example-label">דוגמאות ▼</span>
+</div>
+<div class="example-content" id="example-fear_ex4">
+<p><span dir="rtl"><strong>דוגמאות</strong>: להיות עצבני או במצוקה
+משמעותית כשהורה מביא אותו למסגרת, עוקב/ת אחרי המטפל/ת ברחבי הבית, סירוב
+לישון לבד, בדיקה תכופה לווידוא נוכחות המטפל/ת.</span></p>
+</div>
+<p><strong><span dir="rtl">[שם] הפגין/ה פחד, חרדה, מצוקה, הימנעות או
+נסיגה ממצבים שונים - ללא גורם/טריגר ברור או עקבי.</span></strong></p>
+<p><span dir="rtl"><strong>הסבר:</strong> הפגנת חרדה, פחד או התנהגויות
+הימנעות אשר מוכללים למגוון סיטואציות, מעבר להקשרים או טריגרים ספציפיים,
+ללא גורם עקבי או ברור.</span></p>
+<div class="example-toggle" onclick="toggleExample('fear_ex5')">
+  <span class="example-label">דוגמאות ▼</span>
+</div>
+<div class="example-content" id="example-fear_ex5">
+<p><span dir="rtl"><strong>דוגמאות</strong>: דאגה מופרזת לגבי מצבים
+יומיומיים שונים, חיפוש אישור וביטחון לגבי פעילויות רגילות, הימנעות
+מחוויות חדשות באופן כללי, נסיגה מפעילויות תואמות גיל שונות.</span></p>
+</div>
+</blockquote>
+
+</div><div class="domain-toggle" onclick="toggleDomain('dom4')">
+<p><em><span dir="rtl">תחום התנהגויות חזרתיות ומצומצמות (</span>RRB<span
+dir="rtl">)</span></em></p>
+</div>
+<div class="domain-content" id="domain-dom4">
+
+<blockquote>
+<p><strong><span dir="rtl">[שם] ביצע/ה תנועות או התנהגויות מוטוריות
+חזרתיות</span></strong></p>
+<p><span dir="rtl"><strong>הסבר:</strong> ביצוע התנהגויות ותנועות פיזיות
+חזרתיות, שלא נראה שמשרתות מטרה פרקטית ברורה.</span></p>
+<div class="example-toggle" onclick="toggleExample('rrb_ex1')">
+  <span class="example-label">דוגמאות ▼</span>
+</div>
+<div class="example-content" id="example-rrb_ex1">
+<p><span dir="rtl"><strong>דוגמאות</strong>: נפנוף ידיים כשהוא/היא
+מתרגש/ת או מתעצבן/ת, סיבוב או גלגול של חפצים קרוב לעיניים, דפיקות ראש או
+הנהון ראש חוזר.</span></p>
+</div>
+<p><strong><span dir="rtl">[שם] השתמש/ה או שיחק/ה בחפצים באופן חריג מן
+המקובל או חזרתי</span>.</strong></p>
+<p><span dir="rtl"><strong>הסבר:</strong> אינטראקציה עם חפצים באופן
+השונה מהשימוש המיועד להם, או בתבנית חזרתית.</span></p>
+<div class="example-toggle" onclick="toggleExample('rrb_ex2')">
+  <span class="example-label">דוגמאות ▼</span>
+</div>
+<div class="example-content" id="example-rrb_ex2">
+<p><span dir="rtl"><strong>דוגמאות</strong>: סידור צעצועים בשורה במקום
+לשחק איתם באופן פונקציונלי, סיבוב חוזר של גלגלי מכונית צעצוע במקום להסיע
+אותה, התמקדות בחלקים מסוימים של הצעצוע (לדוג' פתיחה/סגירה של דלתות)
+במקום עיסוק בצעצוע כשלם.</span></p>
+</div>
+<p><strong><span dir="rtl">[שם] הראה/תה קושי או מצוקה כאשר חלו שינויים
+בשגרה, בסביבה או בתוכניות</span>.</strong></p>
+<p><span dir="rtl"><strong>הסבר:</strong> נסער/ת או חרד/ה כאשר יש
+שינויים במרחבים פיזיים מוכרים, או כאשר חפצים לא נמצאים במקומם או במנח
+הצפוי.</span></p>
+<div class="example-toggle" onclick="toggleExample('rrb_ex3')">
+  <span class="example-label">דוגמאות ▼</span>
+</div>
+<div class="example-content" id="example-rrb_ex3">
+<p><span dir="rtl"><strong>דוגמאות</strong>: הפגנת מצוקה כשרהיטים בחדר
+מוזזים, עצבנות כשדברים לא נמצאים במקומם הקבוע, מצוקה בעקבות שינויים
+בהצגת האוכל (לדוג' צלחת אחרת).</span></p>
+</div>
+<p><strong><span dir="rtl">[שם] התעקש/ה לבצע טקסים או פעולות ספציפיות
+באופן או בסדר מסוים</span></strong></p>
+<p><span dir="rtl"><strong>הסבר:</strong> הקפדה על טקסים או רצפים
+מדויקים, שכפה/תה על עצמו/ה, שחייבים להתבצע באופן מסוים
+ומדויק.</span></p>
+<div class="example-toggle" onclick="toggleExample('rrb_ex4')">
+  <span class="example-label">דוגמאות ▼</span>
+</div>
+<div class="example-content" id="example-rrb_ex4">
+<p><span dir="rtl"><strong>דוגמאות</strong>: צורך לגעת בחפצים מסוימים
+בסדר ספציפי, הליכה באותו מסלול קבוע בעת תנועה במרחב, הקפדה להתלבש בסדר
+מסוים וקבוע.</span></p>
+</div>
+<p><strong><span dir="rtl">[שם] הראה/תה עניין מצומצם או יוצא דופן -
+בעוצמה או בתוכן - בנושאים או פעילויות מסוימים</span></strong></p>
+<p><span dir="rtl"><strong>הסבר:</strong> עניין או מיקוד אינטנסיבי
+בתחומים או פעילויות ספציפיות, מעבר למה שנחשב מקובל/טיפוסי.</span></p>
+<div class="example-toggle" onclick="toggleExample('rrb_ex5')">
+  <span class="example-label">דוגמאות ▼</span>
+</div>
+<div class="example-content" id="example-rrb_ex5">
+<p><span dir="rtl"><strong>דוגמאות</strong>: צפייה חוזרת באותם קטעי
+וידאו, איסוף נרחב של פריטים ספציפיים, חוזר/ת שוב ושוב על אותו דפוס משחק
+או אותו סיפור משחק.</span></p>
+</div>
+<p><strong><span dir="rtl">[שם] הראה/תה תגובות או התנהגויות לא טיפוסיות
+כלפי גירויים חושיים</span></strong></p>
+<p><span dir="rtl"><strong>הסבר:</strong> מגיב/ה לחוויות חושיות (צלילים,
+מרקמים, אורות, תנועות) או מתעסק/ת בגירויים חושיים בדרכים השונות מתגובות
+טיפוסיות.</span></p>
+<div class="example-toggle" onclick="toggleExample('rrb_ex6')">
+  <span class="example-label">דוגמאות ▼</span>
+</div>
+<div class="example-content" id="example-rrb_ex6">
+<p><span dir="rtl"><strong>דוגמאות</strong>: לכסות את האוזניים בתגובה
+לצלילים יומיומיים, חיפוש אחר לחץ או מקומות צרים/צפופים,חיפוש חוזר של
+חוויות סנסוריות מסוימות.</span></p>
+</div>
+</blockquote>
+
+</div>
+<p><em><span dir="rtl">החלקים הבאים של השאלון משתמשים בסקאלות מענה שונות
+מסולמות התדירות וההשפעה שתוארו קודם. אנא עיינו בהסברים של הסקאלות
+המתאימות לכל חלק.</span></em></p>
+<p><span dir="rtl">סוגי מענה נוספים</span></p>
+
+<div class="domain-toggle" onclick="toggleDomain('dom5')">
+<p><strong><span dir="rtl">תחום אינטראקציה חברתית</span></strong></p>
+</div>
+<div class="domain-content" id="domain-dom5">
+
+<p><em><span dir="rtl">החלק הבא של השאלות מתמקד בהתנהגויות הקשורות
+לאינטראקציה חברתית ותקשורת, שהן שונות במהותן מהשאלות הקודמות המתייחסות
+להתנהגויות וסימפטומים. לכן, חשבנו שהן דורשות שימוש בגישה שונה להערכת
+ההתנהגות.</span></em></p>
+<p><em><span dir="rtl">ראשית, נשאל על תדירות ההתנהגות, באמצעות סקאלת
+תדירות מעט שונה מזו שהשתמשנו בה קודם. בסקאלה זו, תתבקשו לנסות ולכמת כמה
+פעמים במהלך היום התרחשה ההתנהגות, ברמת שכיחות ספציפית. הבדל זה נובע
+מההבנה שהתנהגויות מסוג זה הן ממוקדות וספציפיות יותר, לעומת הקודמות
+שנוטות להיות כלליות יותר.</span></em></p>
+<p><em><span dir="rtl">לדוגמה, מצב רוח שלילי יכול להיות נוכח לאורך כל
+היום, אך התנהגות כמו ליזום אינטראקציה חברתית היא ממוקדת יותר, ומתרחשת
+מספר פעמים מוגדר במהלך היום ולא כל הזמן.</span></em></p>
+<p><em><span dir="rtl">בנוסף, שאלת ההשפעה אינה רלוונטית לפריטים אלה,
+כיוון שמדובר בהתנהגויות "חיוביות" ואנו לא מצפים שהן יפריעו לתפקוד
+הילד.</span></em></p>
+<p><em><span dir="rtl">עם זאת, מעבר לתדירות, עיקר העניין שלנו הוא באיכות
+ההתנהגות – ולכן אנו ממשיכים עם שתי שאלות נוספות לגבי אוטונומיה ומידת
+ההתאמה של ההתנהגות.</span></em></p>
+<p><em><span dir="rtl">אנו מודעים לכך שהמאפיינים של ההתנהגויות עשויים
+להיות מאתגרים יותר לזיהוי והערכה, בשל אופיים המופשט יותר. לכן, אם יש
+משהו לא ברור, אל תהססו לפנות אלינו, וודאו שאתם מבינים היטב את השאלות
+והסקאלות.</span></em></p>
+
+<div class="subscale-toggle" onclick="toggleSubscale('freq_social')">
+<p><em><span dir="rtl">תדירות:</span></em></p>
+</div>
+<div class="subscale-content scale-definition" id="subscale-freq_social">
+
+<ul>
+<li><p><span dir="rtl">באיזו תדירות הופיעה התנהגות זו במהלך
+היום?</span></p></li>
+</ul>
+<ol type="1">
+<li><p><strong><span dir="rtl">כלל לא</span></strong></p></li>
+</ol>
+<p><span dir="rtl">ההתנהגות לא התרחשה כלל במהלך היום.</span></p>
+<ol start="2" type="1">
+<li><p><strong><span dir="rtl">לעיתים נדירות
+(1-2)</span></strong></p></li>
+</ol>
+<p><span dir="rtl">ההתנהגות התרחשה פעם אחת או פעמיים במהלך
+היום.</span></p>
+<ol start="3" type="1">
+<li><p><strong><span dir="rtl">לפעמים (3-5)</span></strong></p></li>
+</ol>
+<p><span dir="rtl">ההתנהגות התרחשה בין שלוש לחמש פעמים במהלך
+היום.</span></p>
+<ol start="4" type="1">
+<li><p><strong><span dir="rtl">לעיתים קרובות
+(6+)</span></strong></p></li>
+</ol>
+<p><span dir="rtl">ההתנהגות התרחשה שש פעמים או יותר במהלך
+היום.</span></p>
+
+</div>
+
+<div class="subscale-toggle" onclick="toggleSubscale('auto_social')">
+<p><em><span dir="rtl">אוטונומיה</span>:</em></p>
+</div>
+<div class="subscale-content scale-definition" id="subscale-auto_social">
+
+<ul>
+<li><p><span dir="rtl">עד כמה ההתנהגות הייתה אוטונומית
+ועצמאית?</span></p></li>
+</ul>
+<p><span dir="rtl">עד כמה הילד/ה יזם/ה וביצע/ה באופן עצמאי אינטראקציה או
+התנהגות חברתית?</span></p>
+<p><span dir="rtl">הפריט בוחן האם הילד/ה יזם/ה והתחיל/ה את ההתנהגות
+בכוחות עצמו/ה, האם הוא/היא נדרש/ה לעזרה כדי להתחיל, או הסתמך/ה על אחרים
+שיובילו. בנוסף, הוא מתייחס להאם הילד/ה הצליח/ה להמשיך את האינטראקציה
+באופן עצמאי, או שהיה/הייתה זקוק/ה לתמיכה מתמשכת.</span></p>
+<ol type="1">
+<li><p><strong><span dir="rtl">יוזמה והובלה מלאים של אדם
+אחר</span></strong></p></li>
+</ol>
+<blockquote>
+<p><span dir="rtl">המשמעות היא שאדם אחר התחיל והוביל את האינטראקציה
+מתחילתה ועד סופה. הילד/ה בעיקר פעל/ה לפי הוראות או רמזים ולא גילה/תה
+יוזמה. האדם האחר החליט מה לעשות, מתי לעשות זאת, והנחה כל שלב; הילד/ה
+הגיב/ה כשנשאל/ה או נתבקש/ה אך לא התחיל/ה או הוביל/ה את
+האינטראקציה.</span></p>
+<div class="example-toggle" onclick="toggleExample('lex15')">
+  <span class="example-label">דוגמה 1 ▼</span>
+</div>
+<div class="example-content" id="example-lex15">
+<p><span dir="rtl"><em>דוגמה 1</em>: מבוגר הביא את הילד/ה לשולחן הציור
+שבו ישב/ה חבר/ה ואמר/ה, "בוא/י נשאל אם את/ה יכול/ה לצייר איתו/ה". המבוגר
+אמר לילד/ה בדיוק מה לומר ומתי. הילד/ה רק חזר/ה על משפטים עם הנחיה ולא
+פעל/ה באופן עצמאי</span>.</p>
+
+</div><div class="example-toggle" onclick="toggleExample('auto_more_ex_1')">
+  <span class="example-label">דוגמה 2 ▼</span>
+</div>
+<div class="example-content" id="example-auto_more_ex_1">
+<p><span dir="rtl"><em>דוגמה 2:</em> המבוגר הביא את הילד/ה לילד/ה אחר/ת
+ואמר/ה, "בוא/י נדבר עם החבר/ה שלך". המבוגר אמר לילד/ה בדיוק מה לומר
+("תגיד שלום... עכשיו תשאל/י מה הוא/היא עושה") , והילד/ה חזר/ה על מילים
+רק כאשר קיבל/ה רמז (</span>prompt<span dir="rtl">). המבוגר הנחה את כל
+האינטראקציה, והילד/ה לא יזם/ה או המשיך/ה את השיחה באופן
+עצמאי.</span></p>
+</div>
+</blockquote>
+<ol start="2" type="1">
+<li><p><strong><span dir="rtl">יוזמה של האחר, הילד/ה בעיקר שיתף/ה
+פעולה</span></strong></p></li>
+</ol>
+<blockquote>
+<p><span dir="rtl">אדם אחר התחיל את האינטראקציה וקבע את הכיוון העיקרי,
+אך הילד/ה תרם/ה יותר מאשר רק העתקה — הוא/היא השתתף/ה ואולי הוסיף/ה
+תגובות קטנות ומוגבלות. הילד/ה עדיין תלוי/ה באדם האחר בשביל התבנית
+ואינו/ה מוביל/ה את האינטראקציה בעצמו/ה.</span></p>
+<div class="example-toggle" onclick="toggleExample('lex14')">
+  <span class="example-label">דוגמה 1 ▼</span>
+</div>
+<div class="example-content" id="example-lex14">
+<p><span dir="rtl"><em>דוגמה 1</em>: מבוגר הצביע על חבר/ה מצייר/ת ואמר/ה
+"בוא/י נלך לבקש להצטרף". המבוגר התחיל את האינטראקציה, והילד/ה הגיב/ה או
+שאל/ה שאלה רק כאשר קיבל/ה רמז. הילד/ה השתתף/ה אך לא הוסיף/ה רעיונות
+ספונטניים</span>.</p>
+
+</div><div class="example-toggle" onclick="toggleExample('lex13')">
+  <span class="example-label">דוגמה 2 ▼</span>
+</div>
+<div class="example-content" id="example-lex13">
+<p><span dir="rtl"><em>דוגמה 2</em>: המבוגר הבחין בילד/ה אחר/ת בקרבת
+מקום ועודד אינטראקציה ("למה שלא תשאל/י מה הוא/היא עושה?"). הילד/ה הגיב/ה
+בברכה או בשאילת שאלה כאשר קיבל/ה רמז אך לא הוסיף/ה נושאים חדשים או
+הוביל/ה את האינטראקציה. השיחה נמשכה רק עם הכוונה והבניה של
+המבוגר.</span></p>
+</div>
+</blockquote>
+<ol start="3" type="1">
+<li><p><strong><span dir="rtl">יוזמה והובלה
+משותפים</span></strong></p></li>
+</ol>
+<blockquote>
+<p><span dir="rtl">הילד/ה ואדם אחר תורמים שניהם להתחלת האינטראקציה
+והכוונה שלה. הילד/ה יוזם/ת לפעמים חלקים מהאינטראקציה ומשתתף/ת בשליטה על
+מה שקורה. הם יכולים לקחת תורות בהובלה, והילד/ה עשוי/ה להזדקק רק לתמיכה
+קלה כדי לשמור על המשך האינטראקציה.</span></p>
+<div class="example-toggle" onclick="toggleExample('auto_more_ex_2')">
+  <span class="example-label">דוגמה 1 ▼</span>
+</div>
+<div class="example-content" id="example-auto_more_ex_2">
+<p><span dir="rtl"><em>דוגמה 1:</em> הילד/ה הביט/ה לעבר שולחן הציור בעוד
+שהמבוגר הציע, "אולי אנחנו יכולים לבקש אם את/ה יכול/ה לצייר גם". הילד/ה
+שאל/ה שאלה קצרה בכוחות עצמו/ה, והמבוגר הוסיף הבהרות קטנות. שניהם עזרו
+לשמור על המשך האינטראקציה</span>.</p>
+</div>
+<div class="example-toggle" onclick="toggleExample('lex12')">
+  <span class="example-label">דוגמה 2 ▼</span>
+</div>
+<div class="example-content" id="example-lex12">
+<p><span dir="rtl"><em>דוגמה 2</em>: הילד/ה הביט/ה לעבר ילד/ה אחר/ת
+באותו הרגע שהמבוגר הציע, "אולי את/ה יכול/ה לדבר איתו/ה". הילד/ה הציע/ה
+הערה ספונטנית קצרה ("גם לי יש את הצעצוע הזה"), והמבוגר הוסיף משהו או עזר
+לעצב את המשך השיחה. הילד/ה והמבוגר התחלפו בהובלה — הילד/ה לפעמים גילה/תה
+יוזמה, אך גם הסתמך/ה על המבוגר שיעזור לשמור על המשך
+האינטראקציה.</span></p>
+</div>
+</blockquote>
+<ol start="4" type="1">
+<li><p><strong><span dir="rtl">יוזמה של הילד/ה, עם תיווך של
+מבוגר</span></strong></p></li>
+</ol>
+<blockquote>
+<p><span dir="rtl">הילד/ה מתחיל/ה ולעתים קרובות מוביל/ה את האינטראקציה,
+אך עדיין מסתמך/ת על מבוגרים או עמיתים לתמיכה כדי להשלים אותה. המבוגר
+מספק/ת רמזים (</span>prompts<span dir="rtl">), הצעות או עזרה קצרה
+(פיגומים -</span> scaffolding<span dir="rtl">) המאפשרים לילד/ה להמשיך
+בצורה עצמאית. הילד/ה מראה יוזמה ברורה, אך לפעמים זקוק/ה לעזרה כדי לשמר
+או להרחיב את האינטראקציה.</span></p>
+<div class="example-toggle" onclick="toggleExample('lex11')">
+  <span class="example-label">דוגמה 1 ▼</span>
+</div>
+<div class="example-content" id="example-lex11">
+<p><span dir="rtl"><em>דוגמה 1</em>: הילד/ה ניגש/ה לשולחן באופן עצמאי
+ושאל/ה, "אפשר לצייר איתך?". המבוגר התערב/ה רק עם תזכורת קצרה אם היה צורך
+("אולי תגיד לו/ה מה אתה רוצה לצייר"). הילד/ה הוביל/ה את האינטראקציה עם
+תמיכה מינימלית</span>.</p>
+
+</div><div class="example-toggle" onclick="toggleExample('lex10')">
+  <span class="example-label">דוגמה 2 ▼</span>
+</div>
+<div class="example-content" id="example-lex10">
+<p><span dir="rtl"><em>דוגמה 2</em>: הילד/ה ניגש/ה באופן עצמאי לילד/ה
+אחר/ת והתחיל/ה את האינטראקציה ("שלום, אתה רוצה לראות את הצעצוע שלי?").
+המבוגר נשאר/ה בקרבת מקום וסיפק/ה פיגומים קלים רק כשנדרש — עזר להבהיר
+מסר, הציע מילה שהילד/ה חיפש/ה, או הזכיר/ה לו/ה כיצד להמשיך בשיחה. הילד/ה
+נשאר/ה בשליטה אך הרוויח/ה מרגעים קטנים של תמיכה.</span></p>
+</div>
+</blockquote>
+<ol start="5" type="1">
+<li><p><strong><span dir="rtl">יוזמה והובלה עצמאית של
+הילד/ה</span></strong></p></li>
+</ol>
+<blockquote>
+<p><span dir="rtl">הילד/ה מתחיל/ה את האינטראקציה וממשיך/ה אותה בכוחות
+עצמו/ה, ללא צורך ברמזים או תמיכה</span>. <span dir="rtl">הוא/היא מראה
+יוזמה, בוחר/ת נושאים או פעולות, שומר/ת על המשך האינטראקציה ומגיב/ה
+בגמישות לאחרים</span>. <span dir="rtl">רמה זו משקפת יוזמה חברתית עצמאית
+ומעורבות מתמשכת באינטראקציה</span>.</p>
+<div class="example-toggle" onclick="toggleExample('auto_more_ex_3')">
+  <span class="example-label">דוגמה 1 ▼</span>
+</div>
+<div class="example-content" id="example-auto_more_ex_3">
+<p><span dir="rtl"><em>דוגמה 1:</em> הילד/ה ניגש/ה לחבר/ה בשולחן הציור,
+ביקש/ה להצטרף, והמשיך/ה באופן טבעי לדבר על הציורים שלהם. הם התחלפו
+בחומרים ושמרו על מעורבות ללא התערבות מבוגר</span>.</p>
+</div>
+<div class="example-toggle" onclick="toggleExample('auto_more_ex_4')">
+  <span class="example-label">דוגמה 2 ▼</span>
+</div>
+<div class="example-content" id="example-auto_more_ex_4">
+<p><span dir="rtl"><em>דוגמה 2:</em> הילד/ה ניגש/ה באופן עצמאי לילד/ה
+אחר/ת והתחיל/ה שיחה ("אני אוהב/ת את הצעצוע שלך. את/ה רוצה לשחק איתי?").
+הילד/ה שאל/ה שאלות, הגיב/ה באופן טבעי, החליפה נושאי שיחה, ושמר/ה על
+אינטראקציה הדדית ללא עזרת מבוגר. האינטראקציה הונעה ונשמרה במלואה על ידי
+הילד/ה.</span></p>
+</div>
+</blockquote>
+
+</div>
+<div class="subscale-toggle" onclick="toggleSubscale('adapt_social')">
+<p><em><span dir="rtl">מידת ההתאמה של ההתנהגות:</span></em></p>
+</div>
+<div class="subscale-content scale-definition" id="subscale-adapt_social">
+
+<div class="subscale-question-prompt">
+<p><strong><span dir="rtl">עד כמה ההתנהגות הייתה הולמת לסיטואציה או לציפיות
+החברתיות?</span></strong></p>
+</div>
+<p><span dir="rtl">הסעיף בוחן עד כמה ההתנהגות של הילד התאימה להקשר
+החברתי, לסביבה בה התרחשה, ולציפיות החברתיות - כולל התאמה לגיל, למקום,
+ולנורמות המקובלות</span>.</p>
+<p><span dir="rtl">חלק מההתנהגויות עשויות לשקף ניסיון להשתלב אך עדיין
+להיות קצת לא במקום (למשל עוצמתיות מדי, ביישניות מאוד, או לא תואמות את
+ההקשר החברתי), בעוד שהתנהגויות אחרות עשויות להתאים באופן מלא.</span></p>
+<ol type="1">
+<li><p><strong><span dir="rtl">כלל לא מותאמת - בלטה כחריגה או
+מפריעה</span></strong></p></li>
+</ol>
+<blockquote>
+<p><span dir="rtl">ההתנהגות בבירור לא התאימה לסיטואציה או לציפיות
+החברתיות. היא עשויה להיות אגרסיבית מדי, פולשנית, רועשת מדי, או מנותקת
+חברתית באופן ששיבש את הפעילות או גרם לאחרים אי-נוחות</span>.</p>
+<div class="example-toggle" onclick="toggleExample('adapt_more_ex_1')">
+  <span class="example-label">דוגמה 1 ▼</span>
+</div>
+<div class="example-content" id="example-adapt_more_ex_1">
+<p><span dir="rtl"><em>דוגמה 1:</em> הילד/ה פורץ/ת פנימה, חוטף/ת קוביות
+מילד/ה אחר/ת, ומפיל/ה חלק מהמבנה תוך התעקשות, "אני בונה
+עכשיו</span>!"</p>
+</div>
+<div class="example-toggle" onclick="toggleExample('adapt_more_ex_2')">
+  <span class="example-label">דוגמה 2 ▼</span>
+</div>
+<div class="example-content" id="example-adapt_more_ex_2">
+<p><span dir="rtl"><em>דוגמה 2:</em> כאשר מבוגר אומר לו/לה שלום, הילד/ה
+קובר/ת את פניו/ה, מסתובב/ת, וחוזר/ת על משפט משונן שאינו קשור לסיטואציה,
+מה שגורם לאינטראקציה להסתיים בפתאומיות.</span></p>
+</div>
+</blockquote>
+<ol start="2" type="1">
+<li><p><strong><span dir="rtl">ברובה לא מותאמת</span></strong></p></li>
+</ol>
+<blockquote>
+<p><span dir="rtl">ההתנהגות הראתה מודעות מסוימת לפעילות, אך ברובה לא
+התאימה לציפיות. הילד/ה אולי ניסה/תה להצטרף אך באופן שהיה פולשני, לא תואם
+בטון, או לא עקבי עם זרימת הקבוצה</span>.</p>
+<div class="example-toggle" onclick="toggleExample('lex9')">
+  <span class="example-label">דוגמה 1 ▼</span>
+</div>
+<div class="example-content" id="example-lex9">
+<p><span dir="rtl"><em>דוגמה 1</em>: הילד/ה יושב/ת עם הקבוצה אבל מתחיל/ה
+לקחת קוביות שאחרים משתמשים בהן. הוא/היא קוטע/ת את התוכנית של הקבוצה
+ובונה באופן עצמאי באמצע המבנה המשותף</span>.</p>
+
+</div><div class="example-toggle" onclick="toggleExample('adapt_more_ex_3')">
+  <span class="example-label">דוגמה 2 ▼</span>
+</div>
+<div class="example-content" id="example-adapt_more_ex_3">
+<p><span dir="rtl"><em>דוגמה 2:</em> הילד/ה חולף/ת על פני המבוגר המברך
+אותו/ה לשלום, וממלמל/ת תגובה שאינה תואמת את ההקשר — כגון אמירת משפט
+אקראי או שימוש בקול מוגזם — מה שגורם לאינטראקציה להרגיש לא
+מתאימה.</span></p>
+</div>
+</blockquote>
+<ol start="3" type="1">
+<li><p><strong><span dir="rtl">מותאמת במידה מסוימת / במידה
+חלקית</span></strong></p></li>
+</ol>
+<blockquote>
+<p><span dir="rtl">ההתנהגות העידה על מאמץ ברור להתאים לסיטואציה, אך
+הייתה מיושרת רק באופן חלקי. הטון, התזמון, או ההבנה החברתית אולי היו מעט
+לא מדויקים, אך כוונת הילד/ה הייתה מתאימה ולא שיבשה את
+הפעילות</span>.</p>
+<div class="example-toggle" onclick="toggleExample('adapt_more_ex_4')">
+  <span class="example-label">דוגמה 1 ▼</span>
+</div>
+<div class="example-content" id="example-adapt_more_ex_4">
+<p><span dir="rtl"><em>דוגמה 1:</em> הילד/ה אומר/ת "אפשר לשחק?" אבל
+מתחיל/ה לבנות לפני שחברים/ות מגיבים/ות. הוא/היא מוסיף/ה קוביות באופן
+שאינו תואם את העיצוב של הקבוצה, אך מנסה להשתתף עם כולם.</span></p>
+</div>
+<div class="example-toggle" onclick="toggleExample('lex8')">
+  <span class="example-label">דוגמה 2 ▼</span>
+</div>
+<div class="example-content" id="example-lex8">
+<p><span dir="rtl"><em>דוגמה 2</em>: הילד/ה אומר/ת "היי" אך עושה זאת
+בשקט רב או ברגע יוצא דופן (למשל, מספר שניות לאחר שפנו אליו/ה). התגובה
+מתאימה אך מעט מביכה או חורקת.</span></p>
+</div>
+</blockquote>
+<ol start="4" type="1">
+<li><p><strong><span dir="rtl">ברובה מותאמת (עם חריגות קלות
+בלבד)</span></strong></p></li>
+</ol>
+<blockquote>
+<p><span dir="rtl">ההתנהגות התאימה היטב לסיטואציה עם אי-התאמות קטנות
+בלבד שאינן משבשות את האינטראקציה. הילד/ה השתלב/ה בכבוד, בשיתוף פעולה,
+ובהתאם לציפיות, עם בעיות קלות בלבד בטון, בתזמון או בתיאום</span>.</p>
+<div class="example-toggle" onclick="toggleExample('lex7')">
+  <span class="example-label">דוגמה 1 ▼</span>
+</div>
+<div class="example-content" id="example-lex7">
+<p><span dir="rtl"><em>דוגמה 1</em>: הילד/ה מבקש/ת להצטרף, ממתין/ה
+בקצרה, ואז מתחיל/ה לעזור. מדי פעם הוא/היא מוסיף/ה חלק מבלי לבדוק עם
+האחרים, אך הוא/היא עוקב/ת אחר התוכנית הכללית</span>.</p>
+
+</div><div class="example-toggle" onclick="toggleExample('adapt_more_ex_5')">
+  <span class="example-label">דוגמה 2 ▼</span>
+</div>
+<div class="example-content" id="example-adapt_more_ex_5">
+<p><span dir="rtl"><em>דוגמה 2:</em> הילד/ה מגיב/ה לפנייה ממבוגר בחמימות
+בברכת "בוקר טוב!" אבל שוכח/ת קשר עין או מפנה את פניו/ה מעט הצידה. עדיין
+מתאים מבחינה חברתית ונעים.</span></p>
+</div>
+</blockquote>
+<ol start="5" type="1">
+<li><p><strong><span dir="rtl">מותאמת לחלוטין
+לסיטואציה</span></strong></p></li>
+</ol>
+<blockquote>
+<p><span dir="rtl">ההתנהגות הייתה מתאימה חברתית לחלוטין, מתוזמנת היטב,
+תואמת גיל, ומשתלבת בצורה חלקה עם ציפיות הסביבה. הילד/ה הראה/תה מודעות
+חזקה להקשר החברתי ולדינמיקה הקבוצתית</span>.</p>
+<div class="example-toggle" onclick="toggleExample('lex6')">
+  <span class="example-label">דוגמה 1 ▼</span>
+</div>
+<div class="example-content" id="example-lex6">
+<p><span dir="rtl"><em>דוגמה 1</em>: הילד/ה ניגש/ת ברוגע, מבקש/ת להצטרף,
+ממתין/ה לתגובה, ואז תורם/ת באופן מתואם לקבוצה — משתף/ת קוביות, עוקב/ת
+אחר המבנה של הקבוצה, ומגיב/ה לרעיונות של החברים/ות</span>.</p>
+
+</div><div class="example-toggle" onclick="toggleExample('lex5')">
+  <span class="example-label">דוגמה 2 ▼</span>
+</div>
+<div class="example-content" id="example-lex5">
+<p><span dir="rtl"><em>דוגמה 2</em>: הילד/ה מסתכל/ת לעבר מבוגר שפנה
+אליו/ה, מחייך/ת, ואומר/ת, "היי! בוקר טוב!" בצורה טבעית, מתוזמנת היטב,
+ומותאמת חברתית.</span></p>
+</div>
+</blockquote>
+
+</div>
+<div class="subscale-toggle" onclick="toggleSubscale('social_questions')">
+<p><em><span dir="rtl">שאלות אינטראקציה חברתית</span></em></p>
+</div>
+<div class="subscale-content scale-definition social-questions-section" id="subscale-social_questions">
+<p><em><span dir="rtl">הפריטים הבאים מתמקדים בסוגים שונים של התנהגויות
+חברתיות שילדכם אולי הפגין היום. ראשית, תדרגו באיזו תדירות כל התנהגות
+התרחשה היום. אם ההתנהגות התרחשה לפחות פעם אחת, יופיעו שתי שאלות נוספות
+שבוחנות עד כמה ההתנהגות הייתה עצמאית/אוטונומית, וכמה הייתה מותאמת
+לסיטואציה החברתית.</span></em></p>
+
+<blockquote>
+<p><strong><span dir="rtl">[שם] יזם/ה אינטראקציה
+חברתית</span>.</strong></p>
+<p><span dir="rtl"><strong>הסבר:</strong> יצירת קשר עם אדם אחר (מבוגר או
+ילד/ה) באופן עצמאי באמצעים מילוליים או לא מילוליים.</span></p>
+<div class="example-toggle" onclick="toggleExample('social_q_ex1')">
+  <span class="example-label">דוגמאות ▼</span>
+</div>
+<div class="example-content" id="example-social_q_ex1">
+<p><span dir="rtl"><strong>דוגמאות</strong>: לגשת להורה להראות להם משהו,
+קריאה בשם של מישהו כדי למשוך את תשומת ליבם, לגעת בכתף של ילד/ה בשביל
+לשחק איתו/ה, שימוש במחוות להזמין מישהו להצטרף לפעילות.</span></p>
+</div>
+</blockquote>
+
+<blockquote>
+<p><strong><span dir="rtl">[שם] השתתף/ה באינטראקציה חברתית
+הדדית/דו-כיוונית (לפחות שני "תורות" באינטראקציה)</span></strong></p>
+<p><span dir="rtl"><strong>הסבר:</strong> לקיחת תורות בשיחה או בפעילות
+עם אדם אחר.</span></p>
+<div class="example-toggle" onclick="toggleExample('social_q_ex2')">
+  <span class="example-label">דוגמאות ▼</span>
+</div>
+<div class="example-content" id="example-social_q_ex2">
+<p><span dir="rtl"><strong>דוגמאות</strong>: עונה כשפונים אליו/יה
+ושואל/ת שאלה בחזרה, משחק מסירות עם מישהו אחר, משתתף/ת במשחק פשוט המתנהל
+בתורות.</span></p>
+</div>
+</blockquote>
+
+<blockquote>
+<p><strong><span dir="rtl">[שם] הביע/ה בפני אחרים איך הוא/היא
+הרגיש/ה</span>.</strong></p>
+<p><span dir="rtl"><strong>הסבר:</strong> לספר או להראות לאחרים את
+הרגשות/התחושות שלהם.</span></p>
+<div class="example-toggle" onclick="toggleExample('social_q_ex3')">
+  <span class="example-label">דוגמאות ▼</span>
+</div>
+<div class="example-content" id="example-social_q_ex3">
+<p><span dir="rtl"><strong>דוגמאות</strong>: אמירות כגון "אני עייף/ה",
+"אני רעב/ה", "משעמם לי", "אני לא אוהב/ת את המשחק הזה", לצעוק תוך כדי
+משחק "זה לא הוגן!", להראות למבוגר מכה שקיבל/ה ולהיראות עצוב, לשלב ידיים
+עם פרצוף עצוב/זעוף, לבכות ולהסתכל על מבוגר לעזרה, להתחבא מאחורי מישהו
+כדי להראות פחד או חוסר נוחות, לרוץ למטפל/ת באמירת "אני אוהב/ת אותך" או
+חיבוק ספונטני.</span></p>
+</div>
+</blockquote>
+
+<blockquote>
+<p><strong><span dir="rtl">[שם] הגיב/ה לרגשות של
+אחרים</span>.</strong></p>
+<p><span dir="rtl"><strong>הסבר:</strong> לשים לב ולהגיב לאיך מישהו אחר
+מרגיש.</span></p>
+<div class="example-toggle" onclick="toggleExample('social_q_ex4')">
+  <span class="example-label">דוגמאות ▼</span>
+</div>
+<div class="example-content" id="example-social_q_ex4">
+<p><span dir="rtl"><strong>דוגמאות</strong>: לנסות לעזור למישהו שבוכה,
+לצחוק כשאחרים צוחקים, לשאול מישהו עצוב מה קרה, להתרחק כשמישהו נראה כועס,
+הצגת הבעת פנים מודאגת כשמישהו אחר נמצא במצוקה.</span></p>
+</div>
+</blockquote>
+
+<blockquote>
+<p><strong><span dir="rtl">[שם] שיתף/ה אדם אחר בתחומי העניין או בחוויות
+שלו/ה</span>.</strong></p>
+<p><span dir="rtl"><strong>הסבר:</strong> להראות או לדבר על משהו שאהב/ה
+או משהו שקרה לו/לה.</span></p>
+<div class="example-toggle" onclick="toggleExample('social_q_ex5')">
+  <span class="example-label">דוגמאות ▼</span>
+</div>
+<div class="example-content" id="example-social_q_ex5">
+<p><span dir="rtl"><strong>דוגמאות</strong>: להשוויץ בציור שצייר/ה, לספר
+משהו שקרה בביה"ס, להראות למישהו צעצוע אהוב, להצביע על משהו מעניין ששם/ה
+לב אליו.</span></p>
+</div>
+</blockquote>
+
+<blockquote>
+<p><strong><span dir="rtl">[שם] חיקה/תה פעולות, התנהגויות או
+קולות</span>.</strong></p>
+<p><span dir="rtl"><strong>הסבר:</strong> לחקות/להעתיק דברים שאנשים
+אחרים עושים או אומרים.</span></p>
+<div class="example-toggle" onclick="toggleExample('social_q_ex6')">
+  <span class="example-label">דוגמאות ▼</span>
+</div>
+<div class="example-content" id="example-social_q_ex6">
+<p><span dir="rtl"><strong>דוגמאות</strong>: מבצע/ת אותן תנועות ידיים
+כמו מישהו אחר, לחזור על ביטויים ששמע/ה, ניסיון להשתמש בכלי אוכל אחרי
+שצפה/תה במישהו אחר משתמש בהם, לחקות תנועות ריקוד.</span></p>
+</div>
+</blockquote>
+
+<blockquote>
+<p><strong><span dir="rtl">[שם] הביע/ה חיבה כלפי
+אחרים.</span></strong></p>
+<p><span dir="rtl"><strong>הסבר:</strong> עושה או אומר/ת דברים שמראים
+שאכפת לו/לה ממישהו, או שהוא/היא מחבב/ת מישהו.</span></p>
+<div class="example-toggle" onclick="toggleExample('social_q_ex7')">
+  <span class="example-label">דוגמאות ▼</span>
+</div>
+<div class="example-content" id="example-social_q_ex7">
+<p><span dir="rtl"><strong>דוגמאות</strong>: חיבוקים, נשיקות, לומר "אני
+אוהב/ת אותך", לחלוק צעצוע אהוב עם מישהו, רצון להיות קרובים לאנשים
+שהוא/היא אוהב/ת, להחזיק למישהו יד.</span></p>
+</div>
+</blockquote>
+
+<p><em><span dir="rtl">שתי השאלות הבאות הנוגעות לאינטראקציות חברתיות
+בנויות עם סולם אחד בלבד:</span></em></p>
+<p class="rating-scale-line"><em><strong><span dir="rtl">כלל לא / במידה מועטה / במידה בינונית /
+במידה רבה / במידה רבה מאוד</span></strong></em></p>
+
+<blockquote>
+<p><strong><span dir="rtl">[שם] הקדיש/ה תשומת לב לדברים שאדם אחר הראה
+לו/לה היום</span></strong></p>
+<p><span dir="rtl"><strong>הסבר:</strong> מביט/ה או מתמקד/ת במה שמישהו
+אחר מצביע עליו או מראה לו/לה.</span></p>
+<div class="example-toggle" onclick="toggleExample('social_q_ex8')">
+  <span class="example-label">דוגמאות ▼</span>
+</div>
+<div class="example-content" id="example-social_q_ex8">
+<p><span dir="rtl"><strong>דוגמאות</strong>: מביט/ה בספר כשמישהו מצביע
+עליו, מעקב בעיניים אחרי אצבע של מישהו שמצביע על משהו, לבחון חפץ שמישהו
+מחזיק/מציג, להסתובב ולהסתכל כשמישהו אומר "תראו את זה".</span></p>
+</div>
+</blockquote>
+
+<blockquote>
+<p><strong><span dir="rtl">נראה ש[שם] נהנה/תה מאינטראקציה עם
+אחרים</span></strong></p>
+<p><span dir="rtl"><strong>הסבר:</strong> נראה/ית שמח/ה או מרוצה כשמבלה
+זמן עם אחרים.</span></p>
+<div class="example-toggle" onclick="toggleExample('social_q_ex9')">
+  <span class="example-label">דוגמאות ▼</span>
+</div>
+<div class="example-content" id="example-social_q_ex9">
+<p><span dir="rtl"><strong>דוגמאות</strong>: לחייך במהלך שיחות, לחפש
+אחרים לשחק איתם, להתרגש כשאדם מוכר מגיע, לבלות יותר זמן בפעילויות
+קבוצתיות מאשר לבד.</span></p>
+</div>
+</blockquote>
+
+</div>
+
+</div><div class="domain-toggle" onclick="toggleDomain('dom6')">
+<p><strong><span dir="rtl">תחום תקשורת</span></strong></p>
+</div>
+<div class="domain-content enhanced-domain communication-domain" id="domain-dom6">
+
+<div class="communication-guided-group">
+<div class="domain-intro-box communication-intro-box">
+<p><em><span dir="rtl">דירוג כמות: בשלוש השאלות הבאות, תתבקשו לבחור
+תשובה של מספר (או טווח) המשקפים את מספר פעולות התקשורת שילדכם השתמש בהן
+או את מספר התורות בהם לקח חלק.</span></em></p>
+</div>
+
+<blockquote>
+<p><strong><span dir="rtl">[שם] השתמש/ה היום ב___ מחוות אינדיבידואליות -
+סימנים/קולות/מילים/סמלי תקשורת תומכת וחלופית (תת"ח)</span>.</strong></p>
+<p><span dir="rtl"><strong>הסבר:</strong> המספר הכולל של יחידות תקשורת
+שונות שבהן הילד/ה השתמש/ה במהלך היום. זה יכול לכלול מחוות (כגון הצבעה או
+נפנוף), סימנים (שפת הסימנים), הפקות קוליות או צלילים (כגון הממ), דיבור
+במילים, או סימני תת"ח (</span>AAC<span dir="rtl">) - תקשורת תומכת
+וחלופית (בעזרת מכשיר או לוח תקשורת).</span></p>
+</blockquote>
+
+<blockquote>
+<p><strong><span dir="rtl">בממוצע, [שם] שילב/ה היום ___ מחוות -
+סימנים/קולות/מילים/סימני תת"ח כדי להעביר מסר אחד</span>.</strong></p>
+<p><span dir="rtl"><strong>הסבר:</strong> מתייחס לכמה יחידות תקשורת חברו
+בדרך כלל ביחד כשהילד/ה מנסה להעביר מסר. לדוגמא לומר "עוד מיץ" זה שתי
+יחידות.</span></p>
+</blockquote>
+
+<blockquote>
+<p><strong><span dir="rtl">בממוצע היום, [שם] לקח/ה חלק בכ-___ תורות
+דיבור בשיחות</span>.</strong></p>
+<p><span dir="rtl"><strong>הסבר:</strong> מתייחס לכמה פעמים הילד/ה לקח/ה
+תור באינטראקציה הדדית עם מישהו. תור כולל להגיב למישהו או ליזום משהו חדש
+(למשל לענות על שאלה או לשאול שאלה).</span></p>
+<div class="example-toggle" onclick="toggleExample('comm_ex3')">
+  <span class="example-label">דוגמאות ▼</span>
+</div>
+<div class="example-content" id="example-comm_ex3">
+<p><span dir="rtl"><strong>דוגמאות</strong>: הילד/ה הצביע/ה על הטלוויזיה
+(-תור ראשון), הורה שאל "את/ה רוצה לצפות במשהו?", הילד/ה הנהן/ה ואמר/ה
+"כן" (- תור שני). כך יש שני תורות של הילד בשיחה זו.</span></p>
+</div>
+</blockquote>
+</div>
+
+<div class="communication-guided-group">
+<div class="scale-guide-box communication-scale-guide">
+<p><em><span dir="rtl">הפריט הבא מתייחס למטרות התקשורת של ילדך. תתבקש/י
+לענות באמצעות הסולם הבא</span>:</em></p>
+<ol type="1">
+<li><p><strong><span dir="rtl">מטרות פונקציונליות (למשל
+בקשות)</span>:</strong> <span dir="rtl">תקשורת בעיקר כדי להשיג משהו או
+לגרום למשהו לקרות</span>.</p></li>
+</ol>
+<div class="example-toggle" onclick="toggleExample('comm_ex4')">
+  <span class="example-label">דוגמאות ▼</span>
+</div>
+<div class="example-content" id="example-comm_ex4">
+<p><strong><span dir="rtl">דוגמאות</span>:</strong> <span dir="rtl">לבקש
+אוכל או צעצוע, להצביע על חפץ רצוי, לומר "עוד" כדי לקבל תור נוסף או עוד
+משהו</span>.</p>
+</div>
+<ol start="3" type="1">
+<li><p><strong><span dir="rtl">שילוב של השניים</span>:</strong> <span
+ dir="rtl">תקשורת הן למטרות פונקציונליות והן למטרות של ביטוי עצמי או
+שיתוף</span>.</p></li>
+</ol>
+<div class="example-toggle" onclick="toggleExample('comm_ex5')">
+  <span class="example-label">דוגמאות ▼</span>
+</div>
+<div class="example-content" id="example-comm_ex5">
+<p><strong><span dir="rtl">דוגמאות</span>:</strong> <span dir="rtl">לבקש
+חטיף וגם לומר למישהו "אני שמח/ה</span>"<span dir="rtl">, להצביע על צעצוע
+ולהראות התרגשות לגביו</span>.</p>
+</div>
+<ol start="5" type="1">
+<li><p><strong><span dir="rtl">מטרות של ביטוי עצמי</span>:</strong>
+<span dir="rtl">תקשורת בעיקר כדי לשתף רגשות, מחשבות או
+רעיונות</span>.</p></li>
+</ol>
+<div class="example-toggle" onclick="toggleExample('comm_ex6')">
+  <span class="example-label">דוגמאות ▼</span>
+</div>
+<div class="example-content" id="example-comm_ex6">
+<p><strong><span dir="rtl">דוגמאות</span>:</strong> <span dir="rtl">לומר
+"אני אוהב/ת אותך</span>"<span dir="rtl">, לספר סיפור, להראות התרגשות או
+תסכול מבלי לבקש דבר</span>.</p>
+</div>
+</div>
+
+<blockquote>
+<p><strong><span dir="rtl">[שם] תקשר/ה היום בעיקר למטרות</span>... <span
+ dir="rtl">(פונקציונליות ----- ביטוי עצמי)</span></strong></p>
+</blockquote>
+</div>
+
+<div class="communication-guided-group">
+<div class="scale-guide-box communication-scale-guide">
+<p><em><span dir="rtl">עבור שלושת הפריטים הבאים, תתבקש/י תחילה לציין
+באיזו תדירות התרחשה התנהגות זו, באמצעות אותה סקאלה ששימשה לפריטי
+האינטראקציה החברתית</span>:</em></p>
+<ol type="1">
+<li><p><em><strong><span dir="rtl">כלל לא</span></strong></em></p></li>
+<li><p><em><strong><span dir="rtl">לעיתים נדירות
+(1-2)</span></strong></em></p></li>
+<li><p><em><strong><span dir="rtl">לפעמים
+(3-5)</span></strong></em></p></li>
+<li><p><em><strong><span dir="rtl">לעיתים קרובות</span> (6+)<span
+ dir="rtl">.</span></strong></em></p></li>
+</ol>
+<p><em><span dir="rtl">אם ההתנהגות התרחשה פעם אחת או יותר, תתבקש/י לציין
+האם היא בוצעה באופן מילולי (וורבלי) או לא מילולי, בסקאלה של 1 עד
+5</span>:</em></p>
+<p class="rating-scale-line"><em><strong><span dir="rtl">1 - באופן לא מילולי</span></strong></em></p>
+<p class="rating-scale-line"><em><strong><span dir="rtl">3 - מתחלף בין מילולי ולא מילולי</span></strong></em></p>
+<p class="rating-scale-line"><em><strong><span dir="rtl">5 - באופן מילולי</span></strong></em></p>
+</div>
+
+<blockquote>
+<p><strong><span dir="rtl">[שם] חיפש/ה או הפנה/תה את תשומת לבם של
+אחרים</span>.</strong></p>
+<p><span dir="rtl"><strong>הסבר:</strong> הילד/ה ניסה למשוך את תשומת
+ליבם של אחרים, לגרום להם להסתכל על משהו, או לשים לה אליו/ה.</span></p>
+<div class="example-toggle" onclick="toggleExample('comm_attention_ex')">
+  <span class="example-label">דוגמאות ▼</span>
+</div>
+<div class="example-content" id="example-comm_attention_ex">
+<p><span dir="rtl"><strong>דוגמאות</strong>: להצביע על מטוס בשמיים ולומר
+"תראו!", לטפוח על הכתף של מישהו ולהראות להם צעצוע, לקרוא בשם של מישהו
+כדי להשיג את תשומת ליבם, להסתכל על מישהו ואז להסתכל על משהו שהוא/היא
+רוצים שהשני יראה.</span></p>
+</div>
+</blockquote>
+
+<blockquote>
+<p><strong><span dir="rtl">[שם] הראה/תה שהוא/היא רוצה חפץ
+מסוים</span>.</strong></p>
+<p><span dir="rtl"><strong>הסבר:</strong> הילד/ה הבהיר/ה שהוא/היא רוצה
+משהו, באמצעות מחוות, צלילים, מילים, או סימנים.</span></p>
+<div class="example-toggle" onclick="toggleExample('comm_object_ex')">
+  <span class="example-label">דוגמאות ▼</span>
+</div>
+<div class="example-content" id="example-comm_object_ex">
+<p><span dir="rtl"><strong>דוגמאות</strong>: הושטת יד לקחת חטיף, לומר או
+לסמן בשפת הסימנים "כדור" תוך כדי שהוא/היא מסתכל/ת על הכדור, למשוך יד של
+הורה לכיוון מדף מסוים, להצביע על צעצוע המונח על השולחן.</span></p>
+</div>
+</blockquote>
+
+<blockquote>
+<p><strong><span dir="rtl">[שם] הגיב/ה באופן ספונטני לאנשים
+אחרים</span>.</strong></p>
+<p><span dir="rtl"><strong>הסבר:</strong> הילד/ה השיב/ה למישהו באופן
+ספונטני, מבלי שהתבקש/ה או הונחה/תה לעשות זאת.</span></p>
+<div class="example-toggle" onclick="toggleExample('comm_spontaneous_ex')">
+  <span class="example-label">דוגמאות ▼</span>
+</div>
+<div class="example-content" id="example-comm_spontaneous_ex">
+<p><span dir="rtl"><strong>דוגמאות</strong>: לענות על שאלה בלי שאמרו
+לו/לה, לצחוק או לחייך בחזרה כשמישהו מחייך אליו/ה, לומר שלום כשמישהו נכנס
+לחדר, להגיב כשמישהו מדבר אליהם גם אם זו לא הייתה שאלה ישירה.</span></p>
+</div>
+</blockquote>
+</div>
+
+<div class="communication-guided-group">
+<div class="scale-guide-box communication-scale-guide">
+<p><em><span dir="rtl">עבור הפריטים הבאים, תתבקש/י לציין עד כמה ילדך
+ממלא הוראות מסוגים שונים באופן עקבי</span>:</em></p>
+<ol type="1">
+<li><p><strong><span dir="rtl">כלל לא</span>:</strong> <span
+ dir="rtl">ילדך לא ביצע/ה או לא מילא/ה הוראות מסוג זה בשום שלב
+היום</span></p></li>
+<li><p><strong><span dir="rtl">באופן לא עקבי</span>:</strong> <span
+ dir="rtl">ילדך ביצע/ה או מילא/ה הוראות מסוג זה רק בחלק מהפעמים שביקשו
+ממנו/ה היום, אך לא בכל פעם</span>.</p></li>
+<li><p><strong><span dir="rtl">באופן עקבי</span>:</strong> <span
+ dir="rtl">ילדך ביצע/ה או מילא/ה הוראות מסוג זה בכל פעם שביקשו ממנו/ה
+היום</span></p></li>
+</ol>
+</div>
+
+<blockquote>
+<p><strong><span dir="rtl">[שם] ביצע/ה הוראות מוכרות - הוראות
+חד-שלביות</span>.</strong></p>
+<p><span dir="rtl"><strong>הסבר:</strong> הילד/ה מילא/ה או ביצע/ה הוראה
+פשוטה, שהוא/היא כבר מכיר/ה, שבה יש שלב אחד בלבד שצריך להתבצע.</span></p>
+<div class="example-toggle" onclick="toggleExample('comm_known_one_step_ex')">
+  <span class="example-label">דוגמאות ▼</span>
+</div>
+<div class="example-content" id="example-comm_known_one_step_ex">
+<p><span dir="rtl"><strong>דוגמאות</strong>: "שב/י כאן" - והילד/ה
+יושב/ת, "תביא את הנעליים שלך" - והילד/ה מביא/ה אותם.</span></p>
+</div>
+</blockquote>
+
+<blockquote>
+<p><strong><span dir="rtl">[שם] ביצע/ה הוראות מוכרות - הוראות
+רב-שלביות</span>.</strong></p>
+<p><span dir="rtl"><strong>הסבר:</strong> הילד/ה מילא/ה או ביצע/ה הוראה
+שהוא/היא כבר מכירים או שומעים לעיתים קרובות, שבה יש לבצע שתי
+פעולות/שלבים או יותר בסדר מסוים.</span></p>
+<div class="example-toggle" onclick="toggleExample('comm_known_multi_step_ex')">
+  <span class="example-label">דוגמאות ▼</span>
+</div>
+<div class="example-content" id="example-comm_known_multi_step_ex">
+<p><span dir="rtl"><strong>דוגמאות</strong>: "תיקח/י את התיק ותניח/י
+אותו ליד הדלת" - והילד/ה לוקח/ת את התיק ומניח/ה אותו ליד
+הדלת.</span></p>
+</div>
+</blockquote>
+
+<blockquote>
+<p><strong><span dir="rtl">[שם] ביצע/ה הוראות חדשות/לא מוכרות - הוראות
+חד-שלביות</span>.</strong></p>
+<p><span dir="rtl"><strong>הסבר:</strong> הילד/ה מילא/ה או ביצע/ה הוראה
+פשוטה שהייתה חדשה לו/לה או שהוא/היא לא שומעים הרבה, שבה נדרש לעשות רק
+דבר אחד.</span></p>
+<div class="example-toggle" onclick="toggleExample('comm_new_one_step_ex')">
+  <span class="example-label">דוגמאות ▼</span>
+</div>
+<div class="example-content" id="example-comm_new_one_step_ex">
+<p><span dir="rtl"><strong>דוגמאות</strong>: "שים/י את הספר על המדף
+השני"- והילד/ה שם/ה את הספר על המדף הרלוונטי, "תלחץ/י על הכפתור הירוק"-
+והילד/ה לוחץ על הכפתור הנכון.</span></p>
+</div>
+</blockquote>
+
+<blockquote>
+<p><strong><span dir="rtl">[שם] ביצע/ה הוראות חדשות/לא מוכרות - הוראות
+רב-שלביות</span>.</strong></p>
+<p><span dir="rtl"><strong>הסבר:</strong> הילד/ה ביצע/ה הוראה חדשה או
+פחות מוכרת, שבה נדרש/ה לעשות שני דברים או יותר בסדר מסוים.</span></p>
+<div class="example-toggle" onclick="toggleExample('comm_new_multi_step_ex')">
+  <span class="example-label">דוגמאות ▼</span>
+</div>
+<div class="example-content" id="example-comm_new_multi_step_ex">
+<p><span dir="rtl"><strong>דוגמאות</strong>: "תחלץ/י את הנעליים, שים/י
+אותם בארון, ותרחץ/י ידיים"- והילד/ה חולץ/ת נעליים, הולך/ת לארון ומניח/ה
+את הנעליים בפנים, ואז הולך/ת לכיור ושוטף/ת ידיים.</span></p>
+</div>
+</blockquote>
+</div>
+
+</div><div class="domain-toggle" onclick="toggleDomain('dom7')">
+<p><strong><span dir="rtl">תחום משחק</span></strong></p>
+</div>
+<div class="domain-content enhanced-domain play-domain" id="domain-dom7">
+
+<div class="scale-guide-box play-scale-guide play-percent-guide">
+<p><em><span dir="rtl">בשאלות הבאות, תתבקש להעריך כמה אחוזים מתוך המשחק
+של ילדך כלל מאפיינים מסוימים, בסולם של 0%-100%.</span></em></p>
+<p><span dir="rtl"><em><strong>0% מהזמן-</strong></em> המשחק של ילדך
+היום לא כלל את המאפיין הזה בכלל.</span></p>
+<p><span dir="rtl"><em><strong>50% מהזמן-</strong></em> מחצית מהמשחק של
+ילדך כלל מאפיינים אלו, ומחצית המשחק לא כלל את המאפיינים הללו.</span></p>
+<p><span dir="rtl"><em><strong>100% מהזמן</strong></em>- כל המשחק של
+ילדך לאורך היום כלל את מאפיין זה.</span></p>
+<p><em><span dir="rtl">ניתן גם לבחור כל ערך ביניים המשקף בצורה הטובה
+ביותר את המשחק של ילדך.</span></em></p>
+</div>
+
+<div class="question-stem-group play-stem-group">
+<div class="question-stem-heading">
+  <p><em><span dir="rtl">בכמה מהמשחק של [שם] הוא/היא...</span></em></p>
+</div>
+
+<blockquote>
+<p><strong><span dir="rtl">העדיפ/ה לשחק לבד והראה/תה עניין מינימלי במשחק
+עם אחרים</span></strong></p>
+<p><span dir="rtl"><strong>הסבר:</strong> הילד/ה בחר/ה בעיקר לשחק לבד
+ולא נראה/תה מאוד מעוניין/ת במה שילדים אחרים עושים.</span></p>
+<div class="example-toggle" onclick="toggleExample('play_alone_ex')">
+  <span class="example-label">דוגמאות ▼</span>
+</div>
+<div class="example-content" id="example-play_alone_ex">
+<p><span dir="rtl"><strong>דוגמאות</strong>: משחק/ת עם צעצועים לבדו/ה,
+תוך התעלמות מילדים אחרים בסביבה.</span></p>
+</div>
+</blockquote>
+
+<blockquote>
+<p><strong><span dir="rtl">צפה/תה במשחק של אחרים מבלי
+להצטרף</span></strong></p>
+<p><span dir="rtl"><strong>הסבר:</strong> הילד/ה צפה/תה בילדים אחרים
+משחקים, אך לא ניסה/תה להצטרף או לשחק ביחד איתם.</span></p>
+<div class="example-toggle" onclick="toggleExample('play_observe_ex')">
+  <span class="example-label">דוגמאות ▼</span>
+</div>
+<div class="example-content" id="example-play_observe_ex">
+<p><span dir="rtl"><strong>דוגמאות</strong>: לשבת ולצפות בילדים משחקים
+כדורגל, בלי לנסות להצטרף למשחק.</span></p>
+</div>
+</blockquote>
+
+<blockquote>
+<p><strong><span dir="rtl">חלק/ה את אותו המרחב או החומרים עם אחרים, אך
+שיחק/ה בנפרד מהם</span></strong></p>
+<p><span dir="rtl"><strong>הסבר:</strong> הילד/ה שיחק/ה בקרבה לילדים
+אחרים, לעיתים קרובות השתמש/ה באותם צעצועים או חומרים, אך נשאר/ה ממוקדת
+במשחק של עצמו/ה. הוא/היא לא עבד/ה ביחד בשיתוף פעולה עם הילדים האחרים, או
+היה/הייתה איתם בהרבה אינטראקציה, למרות ששיחקו זה לצד זה.</span></p>
+<div class="example-toggle" onclick="toggleExample('play_parallel_ex')">
+  <span class="example-label">דוגמאות ▼</span>
+</div>
+<div class="example-content" id="example-play_parallel_ex">
+<p><span dir="rtl"><strong>דוגמאות</strong>: שני ילדים שמשחקים עם אותו
+סט קוביות, כאשר כל אחד בונה מגדל משלו/ה מבלי לעזור אחד לשני. ילדים
+מציירים זה לצד זה באותו שולחן, אך כל אחד עובד על ציור נפרד משלו/ה. ילדים
+באותו ארגז חול, כל אחד חופר בעצמו מבלי לשחק יחד.</span></p>
+</div>
+</blockquote>
+
+<blockquote>
+<p><strong><span dir="rtl">קיים/ה אינטראקציה עם אחרים במהלך המשחק (למשל
+שיתוף או שיחה), בזמן שעדיין עסקו בפעילויות שונות</span></strong></p>
+<p><span dir="rtl"><strong>הסבר:</strong> הילד/ה שיחק/ה בקרבת ילדים
+אחרים, חלק/ה צעצועים או חומרים, ושוחח/ה איתם במהלך המשחק. הם הבחינו
+והכירו אחד בשני והגיבו זה לזה, אך כל ילד/ה עדיין עבד/ה על פעילות נפרדת
+משלו/ה ללא מטרה משותפת.</span></p>
+<div class="example-toggle" onclick="toggleExample('play_associative_ex')">
+  <span class="example-label">דוגמאות ▼</span>
+</div>
+<div class="example-content" id="example-play_associative_ex">
+<p><span dir="rtl"><strong>דוגמאות</strong>: שני ילדים יושבים ליד שולחן
+עם קוביות לגו, מדברים על מה שהם בונים, אך כל אחד בונה מבנה נפרד. ילדים
+מציירים זה לצד זה, חולקים צבעים ומשוחחים, אך כל אחד יוצר ציור שונה.
+ילדים בגן משחקים מבקשים זה מזה תורות בצעצועים, אך עדיין משחקים במשחקים
+נפרדים.</span></p>
+</div>
+</blockquote>
+
+<blockquote>
+<p><strong><span dir="rtl">שיחק/ה עם אחרים, תוך שיתוף פעולה
+פעיל</span></strong></p>
+<p><span dir="rtl"><strong>הסבר:</strong> הילד/ה שיחק/ה עם ילדים אחרים
+בעבודה יחד, שיתוף פעולה אחד/ת עם השני/ה, שיתוף ברעיונות, או בהשגת מטרה
+משותפת.</span></p>
+<div class="example-toggle" onclick="toggleExample('play_cooperative_ex')">
+  <span class="example-label">דוגמאות ▼</span>
+</div>
+<div class="example-content" id="example-play_cooperative_ex">
+<p><span dir="rtl"><strong>דוגמאות</strong>: לבנות יחד ארמון מלגו או
+לדמות ניהול מסעדה במשחק דמיוני.</span></p>
+</div>
+</blockquote>
+
+</div>
+
+<div class="question-stem-group play-stem-group">
+<div class="question-stem-heading">
+  <p><em><span dir="rtl">כמה מהמשחק של [שם] כלל...</span></em></p>
+</div>
+
+<blockquote>
+<p><strong><span dir="rtl">בחינת/חקירת צעצועים או חפצים באמצעות מגע,
+דפיקה, נענוע, הפלה או הזזה</span></strong></p>
+<p><span dir="rtl"><strong>הסבר:</strong> הילד/ה חקר/ה צעצועים או חפצים
+בעיקר על ידי מגע/מישוש, חבטות, ניעור, הזזה או זריקה כדי ללמוד עליהם, ללא
+מטרה ברורה.</span></p>
+<div class="example-toggle" onclick="toggleExample('play_exploratory_ex')">
+  <span class="example-label">דוגמאות ▼</span>
+</div>
+<div class="example-content" id="example-play_exploratory_ex">
+<p><span dir="rtl"><strong>דוגמאות</strong>: מנער/ת רעשן כדי לשמוע את
+הצליל, מכה קוביות אחד בשנייה, מריץ/ה את האצבעות על פני השטח של צעצוע כדי
+להרגיש את המרקם שלו.</span></p>
+</div>
+</blockquote>
+
+<blockquote>
+<p><strong><span dir="rtl">שימוש בשניים או יותר חפצים לאינטראקציה ביניהם
+(או פירוק שלהם)</span></strong></p>
+<p><span dir="rtl"><strong>הסבר:</strong> הילד/ה שיחק/ה על ידי חיבור,
+שילוב, הפרדה או פירוק של שני פריטים או יותר, תוך התמקדות באופן שבו הם
+מתחברים או מתפרקים.</span></p>
+<div class="example-toggle" onclick="toggleExample('play_relational_ex')">
+  <span class="example-label">דוגמאות ▼</span>
+</div>
+<div class="example-content" id="example-play_relational_ex">
+<p><span dir="rtl"><strong>דוגמאות</strong>: לבנות ערמת כוסות או קוביות,
+התאמת חלקי פאזל, פירוק מכונית צעצוע או בניית מגדל קוביות.</span></p>
+</div>
+</blockquote>
+
+<blockquote>
+<p><strong><span dir="rtl">שימוש בצעצועים בדרכים שהם נועדו
+להן</span></strong></p>
+<p><span dir="rtl"><strong>הסבר:</strong> הילד/ה שלך השתמש/ה בצעצועים או
+חפצים למטרתם המיועדת, כפי שהם בדרך כלל אמורים לשמש.</span></p>
+<div class="example-toggle" onclick="toggleExample('play_functional_ex')">
+  <span class="example-label">דוגמאות ▼</span>
+</div>
+<div class="example-content" id="example-play_functional_ex">
+<p><span dir="rtl"><strong>דוגמאות</strong>: להסיע מכונית צעצוע על
+הרצפה; לחיצה על כפתורים בטלפון צעצוע כדי "להתקשר"; הכנסת אוכל לעגלת
+קניות צעצוע.</span></p>
+</div>
+</blockquote>
+
+<blockquote>
+<p><strong><span dir="rtl">שימוש בחפצים כדי לייצג משהו אחר במהלך
+משחק</span></strong></p>
+<p><span dir="rtl"><strong>הסבר:</strong> ילדך השתמש/ה בחפץ כדי לייצג
+משהו אחר.</span></p>
+<div class="example-toggle" onclick="toggleExample('play_symbolic_object_ex')">
+  <span class="example-label">דוגמאות ▼</span>
+</div>
+<div class="example-content" id="example-play_symbolic_object_ex">
+<p><span dir="rtl"><strong>דוגמאות</strong>: העמדת פנים שמקל הוא שרביט
+קסמים, להשתמש בבננה כמו טלפון.</span></p>
+</div>
+</blockquote>
+
+<blockquote>
+<p><strong><span dir="rtl">יצירה והמחזה של תרחישים או סיפורים
+דמיוניים</span></strong></p>
+<p><span dir="rtl"><strong>הסבר:</strong> הילד/ה שלך המציא/ה עולמות,
+דמויות או סיפורים דמיוניים ושיחק/ה אותם במשחק.</span></p>
+<div class="example-toggle" onclick="toggleExample('play_imaginative_ex')">
+  <span class="example-label">דוגמאות ▼</span>
+</div>
+<div class="example-content" id="example-play_imaginative_ex">
+<p><span dir="rtl"><strong>דוגמאות</strong>: העמדת פנים של גיבור/ת על
+המציל/ה את העולם; הקמת מסעדה מדומיינת ולקיחת "הזמנות"; יצירת סיפור שבו
+בובות יוצאות להרפתקה.</span></p>
+</div>
+</blockquote>
+
+</div>
+
+<div class="scale-guide-box play-scale-guide">
+<p><em><span dir="rtl">בפריט הבא תתבקשו להשיב באמצעות סקאלות של תדירות
+והשפעה (לפירוט נוסף, ראו את הסעיף "הבנת השאלות וסוגי התשובות בשאלון-
+פורמט התשובות הנפוץ" - לעיל).</span></em></p>
+</div>
+
+<blockquote>
+<p><strong><span dir="rtl">[שם] נראה/תה חסר/ת אנרגיה או
+התלהבות.</span></strong></p>
+<p><span dir="rtl"><strong>הסבר:</strong> ילדכם הפגין רמת אנרגיה נמוכה או נראה עייף, משועמם או חסר
+עניין במהלך פעילויות. ייתכן שנע לאט, נמנע מלהצטרף, או נראה שקשה להניע או
+לעודד אותו/ה לפעילות.</span></p>
+<div class="example-toggle" onclick="toggleExample('play_low_energy_ex')">
+  <span class="example-label">דוגמאות ▼</span>
+</div>
+<div class="example-content" id="example-play_low_energy_ex">
+<p><span dir="rtl"><strong>דוגמאות</strong>: ישיבה שקטה והשתתפות מועטה במהלך משחק, תנועה איטית וללא
+התלהבות כאשר מתבקשים לשחק, מראה עייף, מבט מרוחק או שכיבה במקום להשתתף
+בפעילויות.</span></p>
+</div>
+</blockquote>
+
+<div class="scale-guide-box play-scale-guide">
+<p><em><span dir="rtl">בפריט הבא תתבקשו להשיב באמצעות הסקאלה הבאה (בשורה
+אחת)</span></em></p>
+<p class="rating-scale-line"><strong><span dir="rtl">כלל לא / במידה מועטה / במידה בינונית / במידה
+רבה / במידה רבה מאוד</span></strong></p>
+</div>
+
+<blockquote>
+<p><strong><span dir="rtl">[שם] הראה/הפגין רגשות חיוביים (כגון שמחה, או
+התרגשות)</span></strong></p>
+<p><span dir="rtl"><strong>הסבר:</strong> ילדכם הראה סימנים ברורים של שמחה, התרגשות או הנאה במהלך
+פעילויות. ייתכן שחייך, צחק, הפגין התלהבות או הראה אנרגיה
+ומוטיבציה.</span></p>
+<div class="example-toggle" onclick="toggleExample('play_positive_emotion_ex')">
+  <span class="example-label">דוגמאות ▼</span>
+</div>
+<div class="example-content" id="example-play_positive_emotion_ex">
+<p><span dir="rtl"><strong>דוגמאות</strong>: חיוך או צחוק במהלך משחק, קפיצה או תנועה נמרצת מתוך
+התרגשות, חיבוק של אדם אחר או מחיאות כפיים לאחר פעילות מהנה.</span></p>
+</div>
+</blockquote>
+
+</div><div class="domain-toggle" onclick="toggleDomain('dom8')">
+<p><strong><span dir="rtl">שאלות שינה</span></strong></p>
+</div>
+<div class="domain-content" id="domain-dom8">
+
+<div class="sleep-question-group">
+  <div class="sleep-group-title"><span dir="rtl">פריטי משך וכמות המתייחסים ללילה הקודם</span></div>
+  <p><em><span dir="rtl">בפריטים הבאים תתבקשו לבחור את משך הזמן שבו ילדכם
+היה במיטה /</span> <span dir="rtl">עד שנרדם / היה ער במהלך הלילה</span>.
+<span dir="rtl"></span></em></p>
+<div class="attention-note">
+<p><em><span dir="rtl"><u><strong>שימו לב</strong>:</u> השאלות העוסקות
+בהרגלי שינה מתייחסות ללילה שקדם למועד שליחת השאלון (20:00
+בערב)</span>.</em></p>
+<p><em><span dir="rtl">כלומר, אם אתם ממלאים את השאלון בערב שבו הוא נשלח-
+אנא התייחסו ללילה הקודם.</span></em></p>
+<p><em><span dir="rtl">אבל, אם אתם ממלאים את השאלון למחרת בבוקר- אנא
+התייחסו לילה שלפני שליחת השאלון, ולא ללילה האחרון שהיה
+כעת</span>.</em></p>
+</div>
+  <p class="sleep-item"><span dir="rtl">מספר השעות ש[שם] היה/הייתה במיטה אתמול
+בלילה</span></p>
+  <p class="sleep-item"><span dir="rtl">משך הזמן שלקח ל[שם] להירדם אתמול
+בלילה</span></p>
+  <p class="sleep-item"><span dir="rtl">מספר הפעמים ש[שם] התעורר/ה במהלך
+הלילה</span></p>
+  <p class="sleep-item"><span dir="rtl">כמה זמן בממוצע היה/הייתה [שם] ער/ה לאחר
+שהתעורר/ה במהלך הלילה</span>?</p>
+</div>
+
+<div class="sleep-question-group">
+  <div class="sleep-group-title"><span dir="rtl">פריט מצב רוח בעת ההתעוררות בבוקר</span></div>
+  <p><em><span dir="rtl">בפריט -</span></em></p>
+  <p class="sleep-item"><span dir="rtl">כאשר [שם] התעורר/ה הבוקר, הוא/היא
+נראתה…</span></p>
+  <p><em><span dir="rtl">תתבקשו לענות באמצעות הסקאלה הבאה</span>:</em></p>
+  <div class="sleep-scale">
+    <div class="sleep-scale-item">
+      <p><strong><span dir="rtl">1</span> – <span dir="rtl">מאוד עצבני/ת או
+חסר/ת סבלנות</span></strong></p>
+      <p><span dir="rtl">נראה/נראתה מוטרד/ת, קודר/ת או רגזני/ת</span></p>
+    </div>
+    <div class="sleep-scale-item">
+      <p><strong><span dir="rtl">2</span> – <span dir="rtl">קצת עצבני/ת או
+חסר/ת סבלנות</span></strong></p>
+      <p><span dir="rtl">נראה/נראתה מוטרד/ת במידה קלה או במצב רוח ירוד, אך לא
+באופן קיצוני</span></p>
+    </div>
+    <div class="sleep-scale-item">
+      <p><strong><span dir="rtl">3</span> – <span
+      dir="rtl">ניטרלי/ת</span></strong></p>
+      <p><span dir="rtl">ניטרלי/ת, רגוע/ה או אדיש/ה, לא עצבני/ת ולא
+שמח/ה</span></p>
+    </div>
+    <div class="sleep-scale-item">
+      <p><strong><span dir="rtl">4</span> – <span dir="rtl">במצב רוח
+טוב</span></strong></p>
+      <p><span dir="rtl">נראה/נראתה מרוצה, חייך/ה או היה/הייתה במצב רוח
+טוב</span></p>
+    </div>
+    <div class="sleep-scale-item">
+      <p><strong><span dir="rtl">5</span> – <span dir="rtl">במצב רוח טוב
+מאוד</span></strong></p>
+      <p><span dir="rtl">נראה/נראתה שמח/ה בבירור, חייך/ה, צחק/ה או הפגין/ה
+התרגשות</span></p>
+    </div>
+  </div>
+</div>
+</div><div class="domain-toggle" onclick="toggleDomain('dom9')">
+<p><strong><span dir="rtl">משוב פתוח</span></strong></p>
+</div>
+<div class="domain-content enhanced-domain open-feedback-domain" id="domain-dom9">
+<div class="open-feedback-card">
+<p><strong><span dir="rtl">נשמח אם תרצו לשתף במחשבות כלשהן על השאלון או
+על חוויית המילוי שלו</span>. <span dir="rtl">האם לדעתכם היה חסר בו משהו
+חשוב בנוגע להתנהגותו של ילדכם היום</span>?</strong></p>
+<p><span dir="rtl">שאלה פתוחה להורים לצורך שיתוף תצפיות נוספות או משוב
+כללי</span></p>
+</div>
+<div class="open-feedback-context">
+<p><span dir="rtl">בתחילת כל שאלון תתבקשו לענות על כמה שאלות יומיות
+קצרות על ההקשר של אותו יום, מצב בריאותו של ילדכם (כגון מחלה או נטילת
+תרופות), עד כמה היום היה טיפוסי והאם קרה משהו יוצא דופן או מעורר
+לחץ</span>.</p>
+<p><span dir="rtl">בנוסף, ביום הראשון של כל שבוע מילוי, תתבקשו לענות על
+מספר שאלות נוספות המתייחסות לשינויים משמעותיים בחיי ילדכם או בחיי המשפחה
+שהתרחשו מאז מילוי השאלונים האחרון.</span></p>
+</div>
+
+
+</div>
+
+<p><span dir="rtl">אנו מעריכים מאוד את הזמן, תשומת הלב והשותפות שלכם
+בתהליך זה. השתתפותכם מסייעת לנו לפתח כלים טובים ומדויקים יותר לתמיכה
+בילדים ובמשפחות</span>.</p>
+<p><span dir="rtl">כפי שצוין קודם לכן, תוכלו תמיד לחזור ולעיין בגרסה
+הכתובה של ההסבר, שתישלח אליכם בדוא״ל, או בגרסה המודפסת שתימסר לכם על-ידי
+עוזר/ת המחקר</span>.</p>
+<p><span dir="rtl">בברכה ובתודה</span>,<br />
+<span dir="rtl">צוות המחקר</span></p>
+
+  </div><!-- /genderable-content -->
+  </div><!-- /doc-body -->
+</div><!-- /page-wrapper -->
+
+<script>
+// Gender replacement map: neutral_form -> [masculine, feminine]
+// Ordered longest-first to prevent partial matches
+const GENDER_MAP = [
+  // Compound forms (must come first - longest match)
+  ["שהוא/היא",         "שהוא",          "שהיא"],
+  ["כשהוא/היא",        "כשהוא",         "כשהיא"],
+  ["שהיה/הייתה",       "שהיה",          "שהייתה"],
+  ["נראה/נראתה",       "נראה",          "נראתה"],
+  ["והילד/ה",          "והילד",         "והילדה"],
+  ["כשהילד/ה",         "כשהילד",        "כשהילדה"],
+  ["הילד/ה",           "הילד",          "הילדה"],
+  ["לילד/ה",           "לילד",          "לילדה"],
+  ["ילד/ה",            "ילד",           "ילדה"],
+  ["לגילו/ה",          "לגילו",         "לגילה"],
+  // Pronouns
+  ["הוא/היא",          "הוא",           "היא"],
+  ["לו/לה",            "לו",            "לה"],
+  ["שלו/ה",            "שלו",           "שלה"],
+  ["לבדו/ה",           "לבדו",          "לבדה"],
+  ["עצמו/ה",           "עצמו",          "עצמה"],
+  ["ממנו/ה",           "ממנו",          "ממנה"],
+  ["משלו/ה",           "משלו",          "משלה"],
+  ["איתו/ה",           "איתו",          "איתה"],
+  ["אליו/יה",          "אליו",          "אליה"],
+  ["אליו/ה",           "אליו",          "אליה"],
+  ["אותו/ה",           "אותו",          "אותה"],
+  ["בשמו/ה",           "בשמו",          "בשמה"],
+  // את/ה (you - imperative)
+  ["את/ה",             "אתה",           "את"],
+  // Verbs - past tense
+  ["היה/הייתה",        "היה",           "הייתה"],
+  ["הפגין/ה",          "הפגין",         "הפגינה"],
+  ["ביצע/ה",           "ביצע",          "ביצעה"],
+  ["וביצע/ה",          "וביצע",         "וביצעה"],
+  ["השתמש/ה",          "השתמש",         "השתמשה"],
+  ["שיחק/ה",           "שיחק",          "שיחקה"],
+  ["ושיחק/ה",          "ושיחק",         "ושיחקה"],
+  ["התקשה/תה",         "התקשה",         "התקשתה"],
+  ["הראה/תה",          "הראה",          "הראתה"],
+  ["והראה/תה",         "והראה",         "והראתה"],
+  ["יזם/ה",            "יזם",           "יזמה"],
+  ["פעל/ה",            "פעל",           "פעלה"],
+  ["שיתף/ה",           "שיתף",          "שיתפה"],
+  ["גילה/תה",          "גילה",          "גילתה"],
+  ["חזר/ה",            "חזר",           "חזרה"],
+  ["נדרש/ה",           "נדרש",          "נדרשה"],
+  ["ואמר/ה",           "ואמר",          "ואמרה"],
+  ["השתתף/ה",          "השתתף",         "השתתפה"],
+  ["הביע/ה",           "הביע",          "הביעה"],
+  ["הגיב/ה",           "הגיב",          "הגיבה"],
+  ["ומגיב/ה",          "ומגיב",         "ומגיבה"],
+  ["לקח/ה",            "לקח",           "לקחה"],
+  ["צפה/תה",           "צפה",           "צפתה"],
+  ["חלק/ה",            "חלק",           "חלקה"],
+  ["התעורר/ה",         "התעורר",        "התעוררה"],
+  ["שהתעורר/ה",        "שהתעורר",       "שהתעוררה"],
+  ["חייך/ה",           "חייך",          "חייכה"],
+  ["והתחיל/ה",         "והתחיל",        "והתחילה"],
+  ["הסתמך/ה",          "הסתמך",         "הסתמכה"],
+  ["הצליח/ה",          "הצליח",         "הצליחה"],
+  ["המשיך/ה",          "המשיך",         "המשיכה"],
+  ["וממשיך/ה",         "וממשיך",        "וממשיכה"],
+  ["תרם/ה",            "תרם",           "תרמה"],
+  ["הוסיף/ה",          "הוסיף",         "הוספה"],
+  ["שכפה/תה",          "שכפה",          "שכפתה"],
+  ["התעקש/ה",          "התעקש",         "התעקשה"],
+  ["חוזר/ת",           "חוזר",          "חוזרת"],
+  ["נסער/ת",           "נסער",          "נסערת"],
+  ["חרד/ה",            "חרד",           "חרדה"],
+  ["הצביע/ה",          "הצביע",         "הצביעה"],
+  ["הנהן/ה",           "הנהן",          "הנהנה"],
+  ["תקשר/ה",           "תקשר",          "תקשרה"],
+  ["חיפש/ה",           "חיפש",          "חיפשה"],
+  ["הפנה/תה",          "הפנה",          "הפנתה"],
+  ["הבהיר/ה",          "הבהיר",         "הבהירה"],
+  ["השיב/ה",           "השיב",          "השיבה"],
+  ["שילב/ה",           "שילב",          "שילבה"],
+  ["חיקה/תה",          "חיקה",          "חיקתה"],
+  ["העדיפ/ה",          "העדיף",         "העדיפה"],
+  ["בחר/ה",            "בחר",           "בחרה"],
+  ["ניסה/תה",          "ניסה",          "ניסתה"],
+  ["נשאר/ה",           "נשאר",          "נשארה"],
+  ["קיים/ה",           "קיים",          "קיימה"],
+  ["ושוחח/ה",          "ושוחח",         "ושוחחה"],
+  ["עבד/ה",            "עבד",           "עבדה"],
+  ["חקר/ה",            "חקר",           "חקרה"],
+  ["המציא/ה",          "המציא",         "המציאה"],
+  ["צחק/ה",            "צחק",           "צחקה"],
+  ["הקדיש/ה",          "הקדיש",         "הקדישה"],
+  ["נהנה/תה",          "נהנה",          "נהנתה"],
+  ["מילא/ה",           "מילא",          "מילאה"],
+  ["שאהב/ה",           "שאהב",          "שאהבה"],
+  ["שצייר/ה",          "שצייר",         "שציירה"],
+  ["ששמע/ה",           "ששמע",          "ששמעה"],
+  ["שצפה/תה",          "שצפה",          "שצפתה"],
+  ["שקיבל/ה",          "שקיבל",         "שקיבלה"],
+  ["יכל/ה",            "יכל",           "יכלה"],
+  ["נזקק/ה",           "נזקק",          "נזקקה"],
+  ["שר/ה",             "שר",            "שרה"],
+  ["הרגיש/ה",          "הרגיש",         "הרגישה"],
+  ["הביט/ה",           "הביט",          "הביטה"],
+  ["שאל/ה",            "שאל",           "שאלה"],
+  ["הציע/ה",           "הציע",          "הציעה"],
+  ["ניגש/ה",           "ניגש",          "ניגשה"],
+  ["הוביל/ה",          "הוביל",         "הובילה"],
+  ["ביקש/ה",           "ביקש",          "ביקשה"],
+  ["שמר/ה",            "שמר",           "שמרה"],
+  ["קיבל/ה",           "קיבל",          "קיבלה"],
+  ["חיפש/ה",           "חיפש",          "חיפשה"],
+  ["הזכיר/ה",          "הזכיר",         "הזכירה"],
+  ["הרוויח/ה",         "הרוויח",        "הרוויחה"],
+  ["התחיל/ה",          "התחיל",         "התחילה"],
+  ["החליפה",           "החליף",         "החליפה"],
+  ["התחלפו",           "התחלפו",        "התחלפו"],
+  ["החליט",            "החליט",         "החליטה"],
+  ["הונחה/תה",         "הונחה",         "הונחתה"],
+  ["שהתבקש/ה",         "שהתבקש",        "שהתבקשה"],
+  // Present tense / participles
+  ["מציג/ה",           "מציג",          "מציגה"],
+  ["מפגין/ה",          "מפגין",         "מפגינה"],
+  ["זקוק/ה",           "זקוק",          "זקוקה"],
+  ["מתחיל/ה",          "מתחיל",         "מתחילה"],
+  ["מביט/ה",           "מביט",          "מביטה"],
+  ["מסרב/ת",           "מסרב",          "מסרבת"],
+  ["יוזם/ת",           "יוזם",          "יוזמת"],
+  ["ומשתתף/ת",         "ומשתתף",        "ומשתתפת"],
+  ["משתתף/ת",          "משתתף",         "משתתפת"],
+  ["מוביל/ה",          "מוביל",         "מובילה"],
+  ["מסתמך/ת",          "מסתמך",         "מסתמכת"],
+  ["בוחר/ת",           "בוחר",          "בוחרת"],
+  ["שומר/ת",           "שומר",          "שומרת"],
+  ["תלוי/ה",           "תלוי",          "תלויה"],
+  ["מתרגש/ת",          "מתרגש",         "מתרגשת"],
+  ["מתעצבן/ת",         "מתעצבן",        "מתעצבנת"],
+  ["עוקב/ת",           "עוקב",          "עוקבת"],
+  ["יושב/ת",           "יושב",          "יושבת"],
+  ["כשיושב/ת",         "כשיושב",        "כשיושבת"],
+  ["מביא/ה",           "מביא",          "מביאה"],
+  ["מעוניין/ת",        "מעוניין",       "מעוניינת"],
+  ["משחק/ת",           "משחק",          "משחקת"],
+  ["ממוקד/ת",          "ממוקד",         "ממוקדת"],
+  ["מתמקד/ת",          "מתמקד",         "מתמקדת"],
+  ["מנער/ת",           "מנער",          "מנערת"],
+  ["מגיב/ה",           "מגיב",          "מגיבה"],
+  ["מכיר/ה",           "מכיר",          "מכירה"],
+  ["אומר/ת",           "אומר",          "אומרת"],
+  ["מחבב/ת",           "מחבב",          "מחבבת"],
+  ["מבצע/ת",           "מבצע",          "מבצעת"],
+  ["יוצא/ת",           "יוצא",          "יוצאת"],
+  ["מצליח/ה",          "מצליח",         "מצליחה"],
+  ["דוחף/ת",           "דוחף",          "דוחפת"],
+  ["עומד/ת",           "עומד",          "עומדת"],
+  ["פעיל/ה",           "פעיל",          "פעילה"],
+  ["ושואל/ת",          "ושואל",         "ושואלת"],
+  ["פורץ/ת",           "פורץ",          "פורצת"],
+  ["חוטף/ת",           "חוטף",          "חוטפת"],
+  ["ומפיל/ה",          "ומפיל",         "ומפילה"],
+  ["קובר/ת",           "קובר",          "קוברת"],
+  ["מסתובב/ת",         "מסתובב",        "מסתובבת"],
+  ["חולף/ת",           "חולף",          "חולפת"],
+  ["ממלמל/ת",          "ממלמל",         "ממלמלת"],
+  ["ממתין/ה",          "ממתין",         "ממתינה"],
+  ["מוסיף/ה",          "מוסיף",         "מוסיפה"],
+  ["קוטע/ת",           "קוטע",          "קוטעת"],
+  ["מראה",             "מראה",          "מראה"],
+  ["נראה/ית",          "נראה",          "נראית"],
+  ["שוכח/ת",           "שוכח",          "שוכחת"],
+  ["מפנה",             "מפנה",          "מפנה"],
+  ["מסתכל/ת",          "מסתכל",         "מסתכלת"],
+  ["מחייך/ת",          "מחייך",         "מחייכת"],
+  ["תורם/ת",           "תורם",          "תורמת"],
+  ["עוזר",             "עוזר",          "עוזרת"],
+  ["מצייר/ת",          "מצייר",         "מציירת"],
+  ["ישב/ה",            "ישב",           "ישבה"],
+  // Adjectives
+  ["שמח/ה",            "שמח",           "שמחה"],
+  ["חסר/ת",            "חסר",           "חסרת"],
+  ["וחסר/ת",           "וחסר",          "וחסרת"],
+  ["עצבני/ת",          "עצבני",         "עצבנית"],
+  ["מוטרד/ת",          "מוטרד",         "מוטרדת"],
+  ["ניטרלי/ת",         "ניטרלי",        "ניטרלית"],
+  ["אימפולסיבי/ת",     "אימפולסיבי",    "אימפולסיבית"],
+  ["אוהב/ת",           "אוהב",          "אוהבת"],
+  ["רגוע/ה",           "רגוע",          "רגועה"],
+  ["אדיש/ה",           "אדיש",          "אדישה"],
+  ["קודר/ת",           "קודר",          "קודרת"],
+  ["רגזני/ת",          "רגזני",         "רגזנית"],
+  ["עייף/ה",           "עייף",          "עייפה"],
+  ["רעב/ה",            "רעב",           "רעבה"],
+  ["ער/ה",             "ער",            "ערה"],
+  ["מווסט/ת",          "מווסט",         "מווסטת"],
+  // Imperative forms (2nd person)
+  ["תתבקש/י",          "תתבקש",         "תתבקשי"],
+  ["שב/י",             "שב",            "שבי"],
+  ["שים/י",            "שים",           "שימי"],
+  ["תיקח/י",           "תיקח",          "תיקחי"],
+  ["ותניח/י",          "ותניח",         "ותניחי"],
+  ["תלחץ/י",           "תלחץ",          "תלחצי"],
+  ["תחלץ/י",           "תחלץ",          "תחלצי"],
+  ["ותרחץ/י",          "ותרחץ",         "ותרחצי"],
+  ["בוא/י",            "בוא",           "בואי"],
+  ["תשאל/י",           "תשאל",          "תשאלי"],
+  ["תגיד",             "תגיד",          "תגידי"],
+  // Other
+  ["יכול/ה",           "יכול",          "יכולה"],
+  ["עצמאית/אוטונומית", "עצמאי/אוטונומי","עצמאית/אוטונומית"],
+  ["הדדית/דו",         "הדדי/דו",       "הדדית/דו"],
+  ["הראה/הפגין",       "הראה/הפגין",    "הראתה/הפגינה"],
+  ["גיבור/ת",          "גיבור",         "גיבורת"],
+  ["המציל/ה",          "המציל",         "המצילה"],
+  ["המטפל/ת",          "המטפל",         "המטפלת"],
+  ["למטפל/ת",          "למטפל",         "למטפלת"],
+  ["עוזר/ת",           "עוזר",          "עוזרת"],
+  ["חבר/ה",            "חבר",           "חברה"],
+  ["אחר/ת",            "אחר",           "אחרת"],
+  ["מצייר/ת",          "מצייר",         "מציירת"],
+  ["עושה",             "עושה",          "עושה"],
+  ["רוצה",             "רוצה",          "רוצה"],
+  ["צעצוע/משחק",       "צעצוע/משחק",    "צעצוע/משחק"],
+  ["מאתגרות/מפריעות",  "מאתגרות/מפריעות", "מאתגרות/מפריעות"],
+  ["הליכה/ריצה",       "הליכה/ריצה",    "הליכה/ריצה"],
+  ["מאנשים/חפצים",     "מאנשים/חפצים",  "מאנשים/חפצים"],
+  ["גורם/טריגר",       "גורם/טריגר",    "גורם/טריגר"],
+  ["פתיחה/סגירה",      "פתיחה/סגירה",   "פתיחה/סגירה"],
+  ["מקובל/טיפוסי",     "מקובל/טיפוסי",  "מקובל/טיפוסי"],
+  ["צרים/צפופים",      "צרים/צפופים",   "צרים/צפופים"],
+  ["סימנים/קולות",     "סימנים/קולות",  "סימנים/קולות"],
+  ["מילים/סמלי",       "מילים/סמלי",    "מילים/סמלי"],
+  ["מחוות/סימנים",     "מחוות/סימנים",  "מחוות/סימנים"],
+  ["קולות/מילים",      "קולות/מילים",   "קולות/מילים"],
+  ["חדשות/לא",         "חדשות/לא",      "חדשות/לא"],
+  ["פעולות/שלבים",     "פעולות/שלבים",  "פעולות/שלבים"],
+  ["בחינת/חקירת",      "בחינת/חקירת",   "בחינת/חקירת"],
+  ["מגע/מישוש",        "מגע/מישוש",     "מגע/מישוש"],
+  ["הרגשות/התחושות",   "הרגשות/התחושות", "הרגשות/התחושות"],
+  ["ו/או",             "ו/או",          "ו/או"],
+  ["הפריעה/פגעה",      "הפריע/פגע",     "הפריעה/פגעה"],
+  ["ההפרעה/השיבוש",    "ההפרעה/השיבוש", "ההפרעה/השיבוש"],
+];
+
+let currentGender = 'neutral';
+let originalHTML = null;
+
+function setGender(gender) {
+  if (gender === currentGender) return;
+  
+  // On first activation, capture the neutral HTML
+  if (originalHTML === null) {
+    originalHTML = document.getElementById('genderable-content').innerHTML;
+  }
+  
+  currentGender = gender;
+  
+  // Update button states
+  document.querySelectorAll('.gender-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('btn-' + gender).classList.add('active');
+  
+  const container = document.getElementById('genderable-content');
+  
+  // Restore neutral first
+  container.innerHTML = originalHTML;
+  if (typeof initializeExampleLabels === 'function') {
+    initializeExampleLabels();
+  }
+  
+  if (gender === 'neutral') return;
+  
+  const idx = gender === 'male' ? 1 : 2;
+  
+  // Walk all text nodes and replace
+  const walker = document.createTreeWalker(
+    container,
+    NodeFilter.SHOW_TEXT,
+    null
+  );
+  
+  const textNodes = [];
+  let node;
+  while ((node = walker.nextNode())) {
+    textNodes.push(node);
+  }
+  
+  textNodes.forEach(textNode => {
+    let text = textNode.nodeValue;
+    let changed = false;
+    for (const [neutral, male, female] of GENDER_MAP) {
+      const replacement = idx === 1 ? male : female;
+      if (text.includes(neutral)) {
+        text = text.split(neutral).join(replacement);
+        changed = true;
+      }
+    }
+    if (changed) textNode.nodeValue = text;
+  });
+}
+</script>
+
+<script>
+// Toggle functions for collapsible sections
+
+function setExpandedState(toggle, content, expanded) {
+  if (!toggle || !content) return;
+  toggle.classList.toggle('expanded', expanded);
+  content.classList.toggle('expanded', expanded);
+  toggle.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+}
+
+function toggleSubscale(subscaleId) {
+  const toggle = event.currentTarget;
+  const content = document.getElementById('subscale-' + subscaleId);
+  setExpandedState(toggle, content, !content.classList.contains('expanded'));
+}
+
+function toggleDomain(domainId) {
+  const toggle = event.currentTarget;
+  const content = document.getElementById('domain-' + domainId);
+  setExpandedState(toggle, content, !content.classList.contains('expanded'));
+}
+
+function toggleScale(scaleId) {
+  const toggle = event.currentTarget;
+  const content = document.getElementById('scale-' + scaleId);
+  setExpandedState(toggle, content, !content.classList.contains('expanded'));
+}
+
+function getExampleBaseLabel(toggle) {
+  const label = toggle.querySelector('.example-label');
+  if (!label) return '';
+  if (!label.dataset.baseLabel) {
+    label.dataset.baseLabel = label.textContent
+      .replace(/[▼▲]/g, '')
+      .replace(/^הצג\s+/, '')
+      .replace(/^הסתר\s+/, '')
+      .trim();
+  }
+  return label.dataset.baseLabel;
+}
+
+function updateExampleLabel(toggle) {
+  const label = toggle.querySelector('.example-label');
+  if (!label) return;
+  const baseLabel = getExampleBaseLabel(toggle);
+  const isOpen = toggle.classList.contains('expanded');
+  label.textContent = (isOpen ? 'הסתר ' : 'הצג ') + baseLabel + (isOpen ? ' ▲' : ' ▼');
+  toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+}
+
+function initializeExampleLabels() {
+  document.querySelectorAll('.example-toggle').forEach(updateExampleLabel);
+}
+
+function toggleExample(exampleId) {
+  const toggle = event.currentTarget;
+  const content = document.getElementById('example-' + exampleId);
+  const nextState = !content.classList.contains('expanded');
+  setExpandedState(toggle, content, nextState);
+  updateExampleLabel(toggle);
+}
+
+function setAllSectionToggles(expanded) {
+  const groups = [
+    ['.scale-toggle', 'scale-'],
+    ['.domain-toggle', 'domain-'],
+    ['.subscale-toggle', 'subscale-'],
+    ['.nested-subscale-toggle', 'subscale-']
+  ];
+
+  groups.forEach(([selector, prefix]) => {
+    document.querySelectorAll(selector).forEach(toggle => {
+      const match = (toggle.getAttribute('onclick') || '').match(/'([^']+)'/);
+      if (!match) return;
+      const content = document.getElementById(prefix + match[1]);
+      setExpandedState(toggle, content, expanded);
+    });
+  });
+}
+
+function expandAllSections() {
+  setAllSectionToggles(true);
+}
+
+function collapseAllSections() {
+  setAllSectionToggles(false);
+}
+
+document.addEventListener('DOMContentLoaded', initializeExampleLabels);
+</script>
+
+</body>
+</html>
